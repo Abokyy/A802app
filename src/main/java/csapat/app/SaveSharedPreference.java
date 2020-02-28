@@ -19,6 +19,7 @@ public class SaveSharedPreference {
     public static final String PREF_USER_RANK = "rank";
     public static final String PREF_USER_ID_IN_DB = "userID";
     public static final String PREF_USER_PROFILE_PICTURE_PATH = "profile_picture_path";
+    public static final String PREF_USER_ANSWERED_TO_NEXT_MEETING = "userAnswerToNextMeeting";
 
     static SharedPreferences getSharedPreferences(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
@@ -38,7 +39,8 @@ public class SaveSharedPreference {
         editor.putInt(PREF_USER_RANK, user.getRank());
         editor.putString(PREF_USER_ID_IN_DB, userID);
         editor.putString(PREF_USER_PROFILE_PICTURE_PATH, user.getProfile_picture());
-        editor.commit();
+        editor.putBoolean(PREF_USER_ANSWERED_TO_NEXT_MEETING, user.answeredToNextMeeting());
+        editor.apply();
     }
 
 
@@ -57,12 +59,19 @@ public class SaveSharedPreference {
         int usRank = sp.getInt(PREF_USER_RANK, 1);
         String userID = sp.getString(PREF_USER_ID_IN_DB, "");
         String usProfilePicturePath = sp.getString(PREF_USER_PROFILE_PICTURE_PATH, "default");
+        boolean answerToMeeting = sp.getBoolean(PREF_USER_ANSWERED_TO_NEXT_MEETING, false);
 
 
-        AppUser appUser = new AppUser(usUsername,usFirstName,usFullName, usLastName, usEmail, usPatrol, usRank, usPatrolLeaderAt,userID, usTroopleaderAt, usProfilePicturePath);
+        return new AppUser(usUsername,usFirstName,usFullName, usLastName, usEmail, usPatrol, usRank, usPatrolLeaderAt, usTroopleaderAt ,userID, usProfilePicturePath, answerToMeeting);
 
-        return appUser;
 
+    }
+
+    public static void setPrefUserAnsweredToNextMeeting(Context context, AppUser user, boolean answered){
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+
+        editor.putBoolean(PREF_USER_ANSWERED_TO_NEXT_MEETING, user.answeredToNextMeeting());
+        editor.apply();
 
     }
 

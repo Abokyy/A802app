@@ -14,6 +14,7 @@ public class Patrol {
     private int meetingHour;
     private int meetingMinute;
     private String meetingLocation;
+    private boolean activePatrol = true;
 
 
 
@@ -50,6 +51,18 @@ public class Patrol {
         this.meetingLocation = meetingLocation;
     }
 
+    public Patrol(String leader, List<String> members, List<String> nextMeetingAttendance, String name, int meetingDay, int meetingHour, int meetingMinute, String meetingLocation, boolean activePatrol) {
+        this.leader = leader;
+        this.members = members;
+        this.nextMeetingAttendance = nextMeetingAttendance;
+        this.name = name;
+        this.meetingDay = meetingDay;
+        this.meetingHour = meetingHour;
+        this.meetingMinute = meetingMinute;
+        this.meetingLocation = meetingLocation;
+        this.activePatrol = activePatrol;
+    }
+
     public String getLeader() {
         return leader;
     }
@@ -82,4 +95,7 @@ public class Patrol {
         return nextMeetingAttendance;
     }
 
+    public boolean isActivePatrol() {
+        return activePatrol;
+    }
 }

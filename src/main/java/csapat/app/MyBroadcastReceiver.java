@@ -1,9 +1,7 @@
 package csapat.app;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +12,6 @@ import android.widget.Toast;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 public class MyBroadcastReceiver extends BroadcastReceiver {
     private static final String TAG = "MyBroadcastReceiver";
@@ -59,11 +56,15 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                 assert notificationManager != null;
                 notificationManager.cancel(1);
 
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                FirebaseFirestore db = BaseCompat.db;
 
                 DocumentReference documentReference= db.collection("patrols").document(BaseCompat.appUser.getPatrol());
 
                 documentReference.update("nextMeetingAttendance", FieldValue.arrayUnion(BaseCompat.appUser.getFullName()));
+
+                DocumentReference userReference = db.collection("users").document(BaseCompat.appUser.getUserID());
+
+                userReference.update("answeredNextMeetingRequest", true);
 
             }
 
@@ -76,6 +77,8 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
             super.onPostExecute(s);
             // Must call finish() so the BroadcastReceiver can be recycled.
             Toast.makeText(context,"Igen válasz elküldve.", Toast.LENGTH_LONG).show();
+            BaseCompat.appUser.setAnsweredToNextMeeting(true);
+            SaveSharedPreference.setPrefUserAnsweredToNextMeeting(context, BaseCompat.appUser, true);
 
             Log.d("Task: ", "Executed " + s);
             pendingResult.finish();

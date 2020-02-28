@@ -13,6 +13,7 @@ public class AppUser {
     private String troopLeaderAt;
     private String userID;
     private String profile_picture;
+    private boolean answeredNextMeetingRequest = false;
 
 
     public AppUser(String username, String firstName, String fullName, String lastName, String email, String patrol, int rank, String patrolLeaderAt, String troopLeaderAt) {
@@ -88,6 +89,21 @@ public class AppUser {
 
     }
 
+    public AppUser(String username, String firstName, String fullName, String lastName, String email, String patrol, int rank, String patrolLeaderAt, String troopLeaderAt, String userID, String profile_picture, boolean answeredNextMeetingRequest) {
+        this.username = username;
+        this.firstName = firstName;
+        this.fullName = fullName;
+        this.lastName = lastName;
+        this.email = email;
+        this.patrol = patrol;
+        this.rank = rank;
+        this.patrolLeaderAt = patrolLeaderAt;
+        this.troopLeaderAt = troopLeaderAt;
+        this.userID = userID;
+        this.profile_picture = profile_picture;
+        this.answeredNextMeetingRequest = answeredNextMeetingRequest;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -137,5 +153,13 @@ public class AppUser {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public boolean answeredToNextMeeting() {
+        return answeredNextMeetingRequest;
+    }
+
+    public void setAnsweredToNextMeeting(boolean answerToNextMeeting) {
+        this.answeredNextMeetingRequest = answerToNextMeeting;
     }
 }
