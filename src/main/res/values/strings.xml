@@ -136,4 +136,6 @@
     <string name="guest_login">Belépés vendégként</string>
     <string name="guest_logout">Kilépés</string>
     <string name="next_meeting_attendance">Következő őrsi jelenléte</string>
+    <string name="really_logout">Kijelentkezel?</string>
+    <string name="are_you_sure_to_logout">Biztos ki szeretnél jelentkezni?</string>
 </resources>

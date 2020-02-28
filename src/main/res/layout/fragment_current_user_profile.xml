@@ -125,7 +125,7 @@
                     android:id="@+id/current_profile_troop_leader_at"/>
             </LinearLayout>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -133,7 +133,8 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
-                android:background="@color/colorSecondaryDark"
+                android:background="#FFEB3B"
+                android:backgroundTint="@color/colorSecondaryDark"
                 android:text="@string/logout" />
 
 
