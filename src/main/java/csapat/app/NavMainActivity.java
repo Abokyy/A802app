@@ -105,6 +105,7 @@ public class NavMainActivity extends BaseCompat {
                 }
             } catch (Exception e) {
 
+                Log.d("Exception", "cathced");
             }
 
             try {
