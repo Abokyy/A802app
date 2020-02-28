@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "872398644043",
+    "firebase_url": "https://csapat-802-app.firebaseio.com",
+    "project_id": "csapat-802-app",
+    "storage_bucket": "csapat-802-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872398644043:android:448964d1be95b4d62b3ece",
+        "android_client_info": {
+          "package_name": "csapat.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "872398644043-gko1fl43e1ar0dtf5asd5e3p7q3ih2jk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "csapat.app",
+            "certificate_hash": "fccbc64f179839158492b2fc31f49b405ed31bca"
+          }
+        },
+        {
+          "client_id": "872398644043-jgr1pj9ri6dnn7lvl5b3u9nmei4d0ahi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "csapat.app",
+            "certificate_hash": "d2833957da390613c979b346140c352242703cd7"
+          }
+        },
+        {
+          "client_id": "872398644043-ern1pk8mn03rq39ddlh66r44tjg1h603.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQ6mhJa4nVoth240fjCyQ3-RWQCGJEQqw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "872398644043-ern1pk8mn03rq39ddlh66r44tjg1h603.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

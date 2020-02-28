@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/navigation_teamstructure"
+    android:id="@+id/mobile_navigation_for_leader">
+
+    <fragment
+        android:id="@+id/navigation_teamstructure"
+        android:name="csapat.app.teamstructure.TeamStructureFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_team_structure" />
+
+    <fragment
+        android:id="@+id/navigation_events"
+        android:name="csapat.app.calendar.EventsFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_events" />
+
+    <fragment
+        android:id="@+id/navigation_news"
+        android:name="csapat.app.newsfeed.NewsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_news" />
+
+    <fragment
+        android:id="@+id/navigation_edit_profile"
+        android:name="csapat.app.CurrentUserProfileFragment"
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_current_user_profile" />
+
+    <fragment
+        android:id="@+id/navigation_leader_options"
+        android:name="csapat.app.ForLeadersFragment"
+        android:label="@string/leader_opportunities"
+        tools:layout="@layout/fragment_for_leaders"/>
+
+</navigation>
