@@ -15,6 +15,7 @@ import android.util.Log;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -182,6 +183,8 @@ public class NavMainActivity extends BaseCompat {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(NavMainActivity.this, LoginActivity.class);
+                        SaveSharedPreference.logOutUser(NavMainActivity.this);
+                        FirebaseAuth.getInstance().signOut();
                         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(intent);
                     }

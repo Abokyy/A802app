@@ -8,8 +8,17 @@
     android:background="@color/colorPrimaryDark"
     android:orientation="vertical">
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/show_prev_events_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Elmúlt események"
+        app:icon="@drawable/plusicon"
+        app:iconSize="24dp"/>
 
-    <ImageButton
+
+    <!--<ImageButton
         android:id="@+id/show_prev_events_btn"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -17,7 +26,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/plusicon"
-        android:contentDescription="@string/load_past_events" />
+        android:contentDescription="@string/load_past_events" />-->
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"

@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
@@ -50,7 +51,7 @@ public class EventsFragment extends Fragment implements MonthCardAdapter.OnMonth
     private RecyclerView.LayoutManager layoutManager;
     private List<Event> allEvents;
     private FirebaseFirestore db;
-    private ImageButton showPrevEventsBtn;
+    private Button showPrevEventsBtn;
     private SwipeRefreshLayout swipeContainer;
 
 
@@ -92,7 +93,7 @@ public class EventsFragment extends Fragment implements MonthCardAdapter.OnMonth
             @Override
             public void onClick(View v) {
                 adapter.update(allEvents);
-                showNotification();
+                //showNotification();
                 showPrevEventsBtn.setVisibility(View.GONE);
             }
         });
