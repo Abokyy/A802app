@@ -25,7 +25,7 @@ import java.util.List;
 
 import csapat.app.BaseCompat;
 import csapat.app.R;
-import csapat.app.SaveSharedPreference;
+import csapat.app.supportFiles.SaveSharedPreference;
 
 public class NewsFragment extends Fragment implements NewsAdapter.OnViewItemSelectedListener {
 

@@ -1,4 +1,4 @@
-package csapat.app;
+package csapat.app.supportFiles;
 
 import android.app.Notification ;
 import android.app.NotificationChannel ;

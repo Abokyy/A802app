@@ -2,10 +2,7 @@ package csapat.app.calendar;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,7 +25,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -42,7 +37,7 @@ import java.util.List;
 
 import csapat.app.NavMainActivity;
 import csapat.app.R;
-import csapat.app.SaveSharedPreference;
+import csapat.app.supportFiles.SaveSharedPreference;
 
 public class EventsFragment extends Fragment implements MonthCardAdapter.OnMonthCardViewItemSelectedListener, SwipeRefreshLayout.OnRefreshListener {
 

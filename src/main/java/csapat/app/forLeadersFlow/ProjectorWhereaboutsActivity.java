@@ -1,4 +1,4 @@
-package csapat.app;
+package csapat.app.forLeadersFlow;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +13,10 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
+
+import csapat.app.BaseCompat;
+import csapat.app.R;
+import csapat.app.forLeadersFlow.ProjectorWhereabouts;
 
 public class ProjectorWhereaboutsActivity extends BaseCompat {
 

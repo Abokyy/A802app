@@ -29,6 +29,9 @@ import androidx.navigation.ui.NavigationUI;
 import java.util.Calendar;
 
 import csapat.app.auth.LoginActivity;
+import csapat.app.supportFiles.MyBroadcastReceiver;
+import csapat.app.supportFiles.MyNotificationPublisher;
+import csapat.app.supportFiles.SaveSharedPreference;
 import csapat.app.teamstructure.model.Patrol;
 
 public class NavMainActivity extends BaseCompat {

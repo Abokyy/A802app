@@ -1,8 +1,5 @@
 package csapat.app.calendar;
 
-import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
-import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,11 +18,10 @@ import androidx.annotation.RequiresApi;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.storage.UploadTask;
 
 import csapat.app.BaseCompat;
 import csapat.app.R;
-import csapat.app.SaveSharedPreference;
+import csapat.app.supportFiles.SaveSharedPreference;
 
 import java.util.HashMap;
 import java.util.Map;

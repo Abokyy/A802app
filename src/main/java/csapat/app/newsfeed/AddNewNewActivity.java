@@ -27,7 +27,7 @@ import java.util.Map;
 
 import csapat.app.BaseCompat;
 import csapat.app.R;
-import csapat.app.SaveSharedPreference;
+import csapat.app.supportFiles.SaveSharedPreference;
 
 
 public class AddNewNewActivity extends BaseCompat {

@@ -1,4 +1,4 @@
-package csapat.app;
+package csapat.app.supportFiles;
 
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
@@ -12,6 +12,9 @@ import android.widget.Toast;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import csapat.app.BaseCompat;
+import csapat.app.NavMainActivity;
 
 public class MyBroadcastReceiver extends BroadcastReceiver {
     private static final String TAG = "MyBroadcastReceiver";

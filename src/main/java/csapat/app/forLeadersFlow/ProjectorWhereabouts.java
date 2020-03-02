@@ -1,4 +1,4 @@
-package csapat.app;
+package csapat.app.forLeadersFlow;
 
 public class ProjectorWhereabouts {
 

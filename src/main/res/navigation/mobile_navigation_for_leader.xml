@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/navigation_leader_options"
-        android:name="csapat.app.ForLeadersFragment"
+        android:name="csapat.app.forLeadersFlow.ForLeadersFragment"
         android:label="@string/leader_opportunities"
         tools:layout="@layout/fragment_for_leaders"/>
 

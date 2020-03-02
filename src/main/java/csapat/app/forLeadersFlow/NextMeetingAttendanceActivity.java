@@ -1,4 +1,4 @@
-package csapat.app;
+package csapat.app.forLeadersFlow;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import csapat.app.BaseCompat;
+import csapat.app.R;
 import csapat.app.teamstructure.StructureItemAdapter;
 import csapat.app.teamstructure.model.Patrol;
 

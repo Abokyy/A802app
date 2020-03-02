@@ -22,7 +22,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import csapat.app.BaseCompat;
 import csapat.app.NavMainActivity;
 import csapat.app.R;
-import csapat.app.SaveSharedPreference;
+import csapat.app.supportFiles.SaveSharedPreference;
 import csapat.app.teamstructure.model.AppUser;
 
 public class LoginActivity extends BaseCompat {

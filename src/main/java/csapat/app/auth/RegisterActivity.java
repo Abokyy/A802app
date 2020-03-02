@@ -2,7 +2,6 @@ package csapat.app.auth;
 
 import androidx.annotation.NonNull;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -22,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -33,10 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import csapat.app.BaseCompat;
-import csapat.app.NavMainActivity;
 import csapat.app.R;
-import csapat.app.SaveSharedPreference;
-import csapat.app.teamstructure.model.AppUser;
 
 public class RegisterActivity extends BaseCompat {
 

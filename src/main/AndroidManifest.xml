@@ -14,9 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ProjectorWhereaboutsActivity"></activity>
-        <activity android:name=".ProjectorLocationActivity" />
-        <activity android:name=".NextMeetingAttendanceActivity" />
+        <activity android:name=".BadgesActivity"></activity>
+        <activity android:name=".forLeadersFlow.ProjectorWhereaboutsActivity" />
+        <activity android:name=".forLeadersFlow.NextMeetingAttendanceActivity" />
         <activity
             android:name=".GoingToPatrolMeetingActivity"
             android:excludeFromRecents="true"
@@ -40,17 +40,17 @@
         <activity android:name=".auth.RegisterActivity" />
         <activity android:name=".teamstructure.patrolActivityStuff.PatrolDetailActivity" />
         <activity android:name=".teamstructure.UserProfileActivity" />
-
-        <service
+        <!--
+<service
             android:name=".java.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <receiver android:name=".MyNotificationPublisher" />
-        <receiver android:name=".MyBroadcastReceiver" />
+        -->
+        <receiver android:name=".supportFiles.MyNotificationPublisher" />
+        <receiver android:name=".supportFiles.MyBroadcastReceiver" />
     </application>
 
 </manifest>
