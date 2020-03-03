@@ -1,6 +1,7 @@
 package csapat.app.badgesystem;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ public class BadgesActivity extends BaseCompat {
     private BadgesCardAdapter badgesCardAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<Badge> allBadge;
+    private static final String TAG = "badgesactivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class BadgesActivity extends BaseCompat {
     private void initRecyclerView() {
 
         badgesCardAdapter = new BadgesCardAdapter(allBadge, BadgesActivity.this);
+        Log.d(TAG, "initrecyclerview");
         layoutManager = new LinearLayoutManager(BadgesActivity.this, LinearLayoutManager.VERTICAL, false);
 
         recyclerView = findViewById(R.id.badge_list_View);
