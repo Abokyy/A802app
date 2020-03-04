@@ -5,6 +5,7 @@ public class Badge {
     private int points = 100;
     private String name = "badge";
     private int badgeID = 0;
+    private String badgeDescription = "null";
 
     public Badge () {}
 
@@ -13,6 +14,14 @@ public class Badge {
         this.points = points;
         this.name = name;
         this.badgeID = badgeID;
+    }
+
+    public Badge(String badgeImageSrc, int points, String name, int badgeID, String badgeDescription) {
+        this.badgeImageSrc = badgeImageSrc;
+        this.points = points;
+        this.name = name;
+        this.badgeID = badgeID;
+        this.badgeDescription = badgeDescription;
     }
 
     public String getBadgeImageSrc() {
@@ -33,5 +42,9 @@ public class Badge {
 
     public void setBadgeID(int badgeID) {
         this.badgeID = badgeID;
+    }
+
+    public String getBadgeDescription() {
+        return badgeDescription;
     }
 }

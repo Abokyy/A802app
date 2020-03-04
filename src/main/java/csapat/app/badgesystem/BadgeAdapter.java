@@ -1,6 +1,7 @@
 package csapat.app.badgesystem;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import java.util.List;
 
 import csapat.app.R;
+
+import static csapat.app.BaseCompat.storageReference;
 
 public class BadgeAdapter extends RecyclerView.Adapter<BadgeAdapter.BadgeViewHolder>{
 
@@ -30,13 +37,31 @@ public class BadgeAdapter extends RecyclerView.Adapter<BadgeAdapter.BadgeViewHol
     @Override
     public BadgeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_badge, parent, false);
+        view.getLayoutParams().width = parent.getMeasuredWidth() / 3;
+
         return new BadgeViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BadgeViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final BadgeViewHolder holder, int position) {
         String item = badges.get(position).getName();
         holder.badgeName.setText(item);
+
+        storageReference.child(badges.get(position).getBadgeImageSrc()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Got the download URL for 'users/me/profile.png'
+                Glide.with(context)
+                        .load(uri)
+                        .into(holder.badgeImage);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+
     }
 
     @Override

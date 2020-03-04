@@ -38,6 +38,8 @@ public class BadgesActivity extends BaseCompat {
 
     private void readData() {
 
+        showProgressDialog();
+
         db.collection("badges")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -46,6 +48,7 @@ public class BadgesActivity extends BaseCompat {
                             allBadge.add(doc.toObject(Badge.class));
                         }
                         initRecyclerView();
+                        hideProgressDialog();
                     }
                 });
     }
