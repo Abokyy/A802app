@@ -1,6 +1,8 @@
 package csapat.app.badgesystem;
 
-public class Badge {
+import java.io.Serializable;
+
+public class Badge implements Serializable {
     private String badgeImageSrc = "null";
     private int points = 100;
     private String name = "badge";

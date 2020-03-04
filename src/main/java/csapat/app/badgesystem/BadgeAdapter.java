@@ -28,7 +28,8 @@ public class BadgeAdapter extends RecyclerView.Adapter<BadgeAdapter.BadgeViewHol
     private Context context;
     private OnBadgeViewItemSelectedListener listener;
 
-    public BadgeAdapter (List<Badge> badges, Context context) {
+    public BadgeAdapter (List<Badge> badges, Context context, OnBadgeViewItemSelectedListener listener) {
+        this.listener = listener;
         this.badges = badges;
         this.context = context;
     }
@@ -44,6 +45,7 @@ public class BadgeAdapter extends RecyclerView.Adapter<BadgeAdapter.BadgeViewHol
 
     @Override
     public void onBindViewHolder(@NonNull final BadgeViewHolder holder, int position) {
+        holder.badge = badges.get(position);
         String item = badges.get(position).getName();
         holder.badgeName.setText(item);
 
@@ -70,19 +72,28 @@ public class BadgeAdapter extends RecyclerView.Adapter<BadgeAdapter.BadgeViewHol
     }
 
     public interface OnBadgeViewItemSelectedListener {
-        void onViewItemSelected(String item);
+        void onBadgeItemSelected(Badge badge);
     }
 
     public class BadgeViewHolder extends RecyclerView.ViewHolder {
 
         ImageView badgeImage;
         TextView badgeName;
+        Badge badge;
 
         public BadgeViewHolder(@NonNull final View itemView) {
             super(itemView);
 
             badgeImage = itemView.findViewById(R.id.badgeImage);
             badgeName = itemView.findViewById(R.id.badgeName);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null)
+                        listener.onBadgeItemSelected(badge);
+                }
+            });
         }
     }
 }

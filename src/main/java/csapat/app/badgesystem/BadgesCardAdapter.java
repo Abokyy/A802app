@@ -1,13 +1,16 @@
 package csapat.app.badgesystem;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,7 +24,9 @@ public class BadgesCardAdapter extends RecyclerView.Adapter<BadgesCardAdapter.Ba
     private List<Badge> badgeList;
     private RecyclerView.RecycledViewPool viewPool;
     private BadgeAdapter badgeAdapter;
+    private BadgeAdapter.OnBadgeViewItemSelectedListener listener;
     private Context context;
+    private Activity act;
     private static final String TAG = "badgescardadapter";
 
     @NonNull
@@ -43,7 +48,7 @@ public class BadgesCardAdapter extends RecyclerView.Adapter<BadgesCardAdapter.Ba
                 badgeTriple.add(badgeList.get(position * 3 + i));
         }
 
-        badgeAdapter = new BadgeAdapter(badgeTriple, context);
+        badgeAdapter = new BadgeAdapter(badgeTriple, context, listener);
         holder.recyclerView.setAdapter(badgeAdapter);
         holder.recyclerView.setRecycledViewPool(viewPool);
 
@@ -71,13 +76,20 @@ public class BadgesCardAdapter extends RecyclerView.Adapter<BadgesCardAdapter.Ba
     }
 
     @Override
-    public void onViewItemSelected(String item) {
+    public void onBadgeItemSelected(Badge badge) {
+
+        Log.d(TAG, "item selected");
+
+        if(act instanceof BadgesActivity)
+            ((BadgesActivity) act).showBadgeDescrDialog(badge);
 
     }
 
-    public BadgesCardAdapter(List<Badge> badges, Context context) {
+    public BadgesCardAdapter(List<Badge> badges, Context context, Activity act, BadgeAdapter.OnBadgeViewItemSelectedListener listener) {
         this.badgeList = badges;
+        this.act = act;
         this.context = context;
+        this.listener = listener;
         viewPool = new RecyclerView.RecycledViewPool();
         Log.d(TAG, "BadgesCardAdapter constructor");
     }
