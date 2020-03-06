@@ -1,10 +1,12 @@
 package csapat.app.badgesystem;
 
+import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,7 +29,9 @@ public class BadgeDescriptionDialogFragment extends DialogFragment {
     private ImageView badgeImage;
     private TextView badgeName;
     private TextView badgeDescription;
+    private TextView badgePoints;
     private Badge badge;
+    private Button unclockBtn;
 
     public  BadgeDescriptionDialogFragment (){}
 
@@ -46,13 +50,26 @@ public class BadgeDescriptionDialogFragment extends DialogFragment {
         badge = (Badge) getArguments().getSerializable("badge");
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.badge_description_dialog_fragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_badge_description_dialog, container, false);
 
         badgeDescription = v.findViewById(R.id.badgeDescription);
         badgeImage = v.findViewById(R.id.detailedBadgeImage);
         badgeName = v.findViewById(R.id.detailedBadgeName);
+        badgePoints = v.findViewById(R.id.badgePointNumber);
+        unclockBtn = v.findViewById(R.id.unlockBtn);
+
+        unclockBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
+
+
+        badgePoints.setText(Integer.toString(badge.getPoints()));
 
         badgeName.setText(badge.getName());
         badgeDescription.setText(badge.getBadgeDescription());

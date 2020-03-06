@@ -34,6 +34,9 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_badges);
 
+        showProgressDialog();
+
+
         allBadge = new ArrayList<>();
 
         readData();
@@ -41,7 +44,6 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
 
     private void readData() {
 
-        showProgressDialog();
 
         db.collection("badges")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -51,7 +53,6 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
                             allBadge.add(doc.toObject(Badge.class));
                         }
                         initRecyclerView();
-                        hideProgressDialog();
                     }
                 });
     }
@@ -65,6 +66,7 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
         recyclerView = findViewById(R.id.badge_list_View);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(badgesCardAdapter);
+        hideProgressDialog();
     }
 
     public void showBadgeDescrDialog(Badge badge) {
