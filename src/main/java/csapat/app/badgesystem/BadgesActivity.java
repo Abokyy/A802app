@@ -53,6 +53,7 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
                             allBadge.add(doc.toObject(Badge.class));
                         }
                         initRecyclerView();
+                        hideProgressDialog();
                     }
                 });
     }
@@ -66,7 +67,6 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
         recyclerView = findViewById(R.id.badge_list_View);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(badgesCardAdapter);
-        hideProgressDialog();
     }
 
     public void showBadgeDescrDialog(Badge badge) {

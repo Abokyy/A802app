@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.List;
 
+import csapat.app.BaseCompat;
 import csapat.app.R;
 
 import static csapat.app.BaseCompat.storageReference;
@@ -56,6 +57,7 @@ public class BadgeAdapter extends RecyclerView.Adapter<BadgeAdapter.BadgeViewHol
                 Glide.with(context)
                         .load(uri)
                         .into(holder.badgeImage);
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
