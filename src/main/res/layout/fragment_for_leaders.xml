@@ -33,6 +33,16 @@
             app:layout_constraintTop_toBottomOf="@+id/projectorBtn" />
 
         <Button
+            android:id="@+id/allSubmittedTaskBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="@string/submitted_tasks"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/home_orderBtn"/>
+
+        <Button
             android:id="@+id/nextMeetingAttBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

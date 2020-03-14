@@ -47,9 +47,9 @@ class SendTaskActivity : BaseCompat() {
             if (image != null) {
                 val taskSolution = TaskSolution(taskSolutionET.text.toString(),
                         appUser.fullName, intent.getIntExtra("badgeID", 0),
-                        "task_solutions/${appUser.fullName}_${appUser.patrol}")
+                        "task_solutions/${appUser.fullName}_${appUser.patrol}_${intent.getIntExtra("badgeID", 0)}")
 
-                db.collection("taskSolutions").document("${taskSolution.taskSubmitter}ForBadge${taskSolution.badgeID}").set(taskSolution)
+                db.collection("taskSolutions").document("${taskSolution.taskSubmitter} For Badge ${taskSolution.badgeID}").set(taskSolution)
                 val uploadTask = storageReference.child("task_solutions/${taskSolution.taskSubmitter}_${appUser.patrol}_${taskSolution.badgeID}").putFile(image!!)
                 uploadTask.addOnSuccessListener {
                     Toast.makeText(applicationContext, "Elküldve!", Toast.LENGTH_LONG)
@@ -59,7 +59,7 @@ class SendTaskActivity : BaseCompat() {
                 val taskSolution = TaskSolution(taskSolutionET.text.toString(),
                         appUser.fullName, intent.getIntExtra("badgeID", 0))
 
-                db.collection("taskSolutions").document("${taskSolution.taskSubmitter}ForBadge${taskSolution.badgeID}").set(taskSolution)
+                db.collection("taskSolutions").document("${taskSolution.taskSubmitter} For Badge ${taskSolution.badgeID}").set(taskSolution)
 
             }
             finish()

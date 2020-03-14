@@ -13,6 +13,7 @@ import android.widget.Button;
 
 import csapat.app.R;
 import csapat.app.badgesystem.BadgesActivity;
+import csapat.app.badgesystem.TaskListActivity;
 
 
 /**
@@ -35,6 +36,16 @@ public class ForLeadersFragment extends Fragment {
         Button nextMeetingAttBtn = root.findViewById(R.id.nextMeetingAttBtn);
         Button projectorBtn = root.findViewById(R.id.projectorBtn);
         Button ach = root.findViewById(R.id.home_orderBtn);
+        Button submittedTasks = root.findViewById(R.id.allSubmittedTaskBtn);
+
+        submittedTasks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent submittedTasksIntent = new Intent(getActivity(), TaskListActivity.class);
+                startActivity(submittedTasksIntent);
+            }
+        });
+
         ach.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

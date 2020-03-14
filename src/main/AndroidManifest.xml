@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".badgesystem.SendTaskActivity"></activity>
+        <activity android:name=".badgesystem.TaskListActivity"></activity>
+        <activity android:name=".badgesystem.SendTaskActivity" />
         <activity android:name=".badgesystem.BadgesActivity" />
         <activity android:name=".forLeadersFlow.ProjectorWhereaboutsActivity" />
         <activity android:name=".forLeadersFlow.NextMeetingAttendanceActivity" />
