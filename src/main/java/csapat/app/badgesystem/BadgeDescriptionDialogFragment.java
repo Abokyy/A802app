@@ -1,6 +1,7 @@
 package csapat.app.badgesystem;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -64,7 +65,9 @@ public class BadgeDescriptionDialogFragment extends DialogFragment {
         unclockBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                Intent intent = new Intent(getActivity(), SendTaskActivity.class);
+                intent.putExtra("badgeID", badge.getBadgeID());
+                startActivity(intent);
             }
         });
 
