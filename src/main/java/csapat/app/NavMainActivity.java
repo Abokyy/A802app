@@ -81,7 +81,7 @@ public class NavMainActivity extends BaseCompat {
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 Patrol patrol;
                                 patrol = documentSnapshot.toObject(Patrol.class);
-                                scheduleNotification(patrol);
+                                //scheduleNotification(patrol);
 
                             }
                         });

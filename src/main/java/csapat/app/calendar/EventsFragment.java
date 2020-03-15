@@ -169,7 +169,7 @@ public class EventsFragment extends Fragment implements MonthCardAdapter.OnMonth
         }
 
         adapter = new MonthCardAdapter(allEvents, getActivity());
-        //adapter.update(upcomingEvents);
+        adapter.update(upcomingEvents);
         layoutManager = new LinearLayoutManager(getActivity() , LinearLayoutManager.VERTICAL, false);
 
         recyclerView = view.findViewById(R.id.event_list_View);
