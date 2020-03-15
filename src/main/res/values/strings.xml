@@ -140,4 +140,5 @@
     <string name="are_you_sure_to_logout">Biztos ki szeretnél jelentkezni?</string>
     <string name="unlock">Feloldás</string>
     <string name="submitted_tasks">Beküldött feladatok</string>
+    <string name="imagefortasksolution">ImageForTaskSolution</string>
 </resources>

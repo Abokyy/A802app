@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/taskSolutionDetailsRootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".badgesystem.TaskSolutionDetails">
+
+        <TextView
+            android:id="@+id/taskSolutionDetailTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="9dp"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/taskSolutionDetailImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/taskSolutionDetailTV"
+            android:contentDescription="@string/imagefortasksolution" />
+        
+        <ImageButton
+            android:id="@+id/refuseTask"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/cancel"
+            app:layout_constraintTop_toBottomOf="@id/taskSolutionDetailImage"
+            app:layout_constraintEnd_toStartOf="@id/acceptTask"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <ImageButton
+            android:id="@+id/acceptTask"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/check"
+            app:layout_constraintTop_toBottomOf="@id/taskSolutionDetailImage"
+            app:layout_constraintStart_toEndOf="@id/refuseTask"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

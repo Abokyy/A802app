@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import csapat.app.R
 import kotlinx.android.synthetic.main.item_task_card.view.*
-import csapat.app.badgesystem.TaskSolution
-import java.util.function.ToDoubleBiFunction
 
 class TaskItemAdapter (val taskList : MutableList<TaskSolution>, val context : Context) :
         RecyclerView.Adapter<TaskItemAdapter.TaskViewHolder>() {
@@ -26,7 +24,7 @@ class TaskItemAdapter (val taskList : MutableList<TaskSolution>, val context : C
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = taskList[position]
         holder.taskSolution = task
-        holder.taskText.text = task.taskSubmitter
+        holder.taskText.text = task.taskSubmitterUserID
     }
 
     interface taskItemClickListener {

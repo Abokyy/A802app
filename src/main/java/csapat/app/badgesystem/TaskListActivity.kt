@@ -1,6 +1,7 @@
 package csapat.app.badgesystem
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -13,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_task_list.*
 class TaskListActivity : BaseCompat(), TaskItemAdapter.taskItemClickListener {
 
     private val taskList = mutableListOf<TaskSolution>()
+    private val taskIDList = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +32,7 @@ class TaskListActivity : BaseCompat(), TaskItemAdapter.taskItemClickListener {
                     for (document in documents) {
                         val taskSolution = document.toObject(TaskSolution::class.java)
                         taskList.add(taskSolution)
+                        taskIDList.add(document.id)
                     }
                     initrecyclerview()
                 }
@@ -37,13 +40,16 @@ class TaskListActivity : BaseCompat(), TaskItemAdapter.taskItemClickListener {
 
     private fun initrecyclerview() {
         taskRecyclerView.layoutManager = LinearLayoutManager(this)
-        var adapter : TaskItemAdapter = TaskItemAdapter(taskList, this)
+        val adapter = TaskItemAdapter(taskList, this)
         adapter.itemClickListener = this
         taskRecyclerView.adapter = adapter
     }
 
-    @SuppressLint("ShowToast")
     override fun onItemClick(taskSolution: TaskSolution) {
-        Toast.makeText(applicationContext, "teszt", Toast.LENGTH_LONG).show()
+        val intent = Intent(this, TaskSolutionDetails::class.java).apply {
+            putExtra("TaskSolution", taskSolution)
+            putExtra("TaskSolutionID", taskIDList[taskList.indexOf(taskSolution)])
+        }
+        startActivity(intent)
     }
 }

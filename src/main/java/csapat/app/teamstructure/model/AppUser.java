@@ -1,5 +1,9 @@
 package csapat.app.teamstructure.model;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 public class AppUser {
 
     private String username;
@@ -14,6 +18,7 @@ public class AppUser {
     private String userID;
     private String profile_picture;
     private boolean answeredNextMeetingRequest = false;
+    private List<Integer> achievedBadges;
 
 
     public AppUser(String username, String firstName, String fullName, String lastName, String email, String patrol, int rank, String patrolLeaderAt, String troopLeaderAt) {
@@ -104,6 +109,22 @@ public class AppUser {
         this.answeredNextMeetingRequest = answeredNextMeetingRequest;
     }
 
+    public AppUser(String username, String firstName, String fullName, String lastName, String email, String patrol, int rank, String patrolLeaderAt, String troopLeaderAt, String userID, String profile_picture, boolean answeredNextMeetingRequest, List<Integer> achievedBadges) {
+        this.username = username;
+        this.firstName = firstName;
+        this.fullName = fullName;
+        this.lastName = lastName;
+        this.email = email;
+        this.patrol = patrol;
+        this.rank = rank;
+        this.patrolLeaderAt = patrolLeaderAt;
+        this.troopLeaderAt = troopLeaderAt;
+        this.userID = userID;
+        this.profile_picture = profile_picture;
+        this.answeredNextMeetingRequest = answeredNextMeetingRequest;
+        this.achievedBadges = achievedBadges;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -161,5 +182,13 @@ public class AppUser {
 
     public void setAnsweredToNextMeeting(boolean answerToNextMeeting) {
         this.answeredNextMeetingRequest = answerToNextMeeting;
+    }
+
+    public boolean isAnsweredNextMeetingRequest() {
+        return answeredNextMeetingRequest;
+    }
+
+    public List<Integer> getAchievedBadges() {
+        return achievedBadges;
     }
 }
