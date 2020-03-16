@@ -12,7 +12,7 @@ public class AppUser {
     private String lastName;
     private String email;
     private String patrol;
-    private int rank;
+    private int rank = 0;
     private String patrolLeaderAt;
     private String troopLeaderAt;
     private String userID;
