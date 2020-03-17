@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.FragmentManager
 import csapat.app.badgesystem.BadgesActivity
+import csapat.app.badgesystem.ScoreboardActivity
 import csapat.app.badgesystem.TaskListActivity
 import csapat.app.teamstructure.TeamStructureFragment
 import kotlinx.android.synthetic.main.activity_send_task.*
@@ -49,7 +50,8 @@ class WelcomeFragment : Fragment() {
         }
 
         root.showScoreboardBtn.setOnClickListener {
-            //TODO
+            val intent = Intent(activity, ScoreboardActivity::class.java)
+            startActivity(intent)
         }
 
         return root

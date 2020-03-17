@@ -40,9 +40,18 @@
             android:layout_height="100dp"
             android:layout_margin="10dp"
             android:background="@drawable/cancel"
-            app:layout_constraintTop_toBottomOf="@id/taskSolutionDetailImage"
+            app:layout_constraintTop_toBottomOf="@id/refuseResponseTV"
             app:layout_constraintEnd_toStartOf="@id/acceptTask"
             app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/refuseResponseTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/taskSolutionDetailImage" />
 
         <ImageButton
             android:id="@+id/acceptTask"
@@ -50,7 +59,7 @@
             android:layout_height="100dp"
             android:layout_margin="10dp"
             android:background="@drawable/check"
-            app:layout_constraintTop_toBottomOf="@id/taskSolutionDetailImage"
+            app:layout_constraintTop_toBottomOf="@id/refuseResponseTV"
             app:layout_constraintStart_toEndOf="@id/refuseTask"
             app:layout_constraintEnd_toEndOf="parent"/>
 

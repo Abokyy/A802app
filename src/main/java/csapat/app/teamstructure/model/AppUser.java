@@ -18,7 +18,8 @@ public class AppUser {
     private String userID;
     private String profile_picture;
     private boolean answeredNextMeetingRequest = false;
-    private List<Integer> achievedBadges;
+    private List<Integer> achievedBadges = new ArrayList<>();
+    private int score = 0;
 
 
     public AppUser(String username, String firstName, String fullName, String lastName, String email, String patrol, int rank, String patrolLeaderAt, String troopLeaderAt) {
@@ -125,6 +126,23 @@ public class AppUser {
         this.achievedBadges = achievedBadges;
     }
 
+    public AppUser(String username, String firstName, String fullName, String lastName, String email, String patrol, int rank, String patrolLeaderAt, String troopLeaderAt, String userID, String profile_picture, boolean answeredNextMeetingRequest, List<Integer> achievedBadges, int score) {
+        this.username = username;
+        this.firstName = firstName;
+        this.fullName = fullName;
+        this.lastName = lastName;
+        this.email = email;
+        this.patrol = patrol;
+        this.rank = rank;
+        this.patrolLeaderAt = patrolLeaderAt;
+        this.troopLeaderAt = troopLeaderAt;
+        this.userID = userID;
+        this.profile_picture = profile_picture;
+        this.answeredNextMeetingRequest = answeredNextMeetingRequest;
+        this.achievedBadges = achievedBadges;
+        this.score = score;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -190,5 +208,9 @@ public class AppUser {
 
     public List<Integer> getAchievedBadges() {
         return achievedBadges;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

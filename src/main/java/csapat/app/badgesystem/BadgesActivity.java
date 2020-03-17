@@ -10,6 +10,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -27,6 +29,7 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
     private BadgesCardAdapter badgesCardAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<Badge> allBadge;
+    private List<Long> unlockedBadges;
     private static final String TAG = "badgesactivity";
 
     @Override
@@ -38,6 +41,7 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
 
 
         allBadge = new ArrayList<>();
+        unlockedBadges = new ArrayList<>();
 
         readData();
     }
@@ -52,15 +56,25 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
                         for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                             allBadge.add(doc.toObject(Badge.class));
                         }
-                        initRecyclerView();
-                        hideProgressDialog();
+
+                        db.collection("users").document(appUser.getUserID())
+                                .get()
+                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        unlockedBadges = (List<Long>) documentSnapshot.get("achievedBadges");
+                                        initRecyclerView();
+                                        hideProgressDialog();
+                                    }
+                                });
+
                     }
                 });
     }
 
     private void initRecyclerView() {
 
-        badgesCardAdapter = new BadgesCardAdapter(allBadge, BadgesActivity.this, BadgesActivity.this, this);
+        badgesCardAdapter = new BadgesCardAdapter(allBadge, unlockedBadges, BadgesActivity.this, BadgesActivity.this, this);
         Log.d(TAG, "initrecyclerview");
         layoutManager = new LinearLayoutManager(BadgesActivity.this, LinearLayoutManager.VERTICAL, false);
 
@@ -76,7 +90,12 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
             ft.remove(prev);
         ft.addToBackStack(null);
 
-        DialogFragment dialogFragment = BadgeDescriptionDialogFragment.newInstance(badge);
+        boolean unlocked = false;
+
+        if(unlockedBadges.contains((long) badge.getBadgeID()))
+            unlocked = true;
+
+        DialogFragment dialogFragment = BadgeDescriptionDialogFragment.newInstance(badge, unlocked);
         dialogFragment.show(ft, TAG);
     }
 

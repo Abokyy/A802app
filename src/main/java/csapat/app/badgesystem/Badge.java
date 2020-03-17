@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Badge implements Serializable {
     private String badgeImageSrc = "null";
+    private String unlockedImgSrc = "null";
     private int points = 100;
     private String name = "badge";
     private int badgeID = 0;
@@ -20,6 +21,15 @@ public class Badge implements Serializable {
 
     public Badge(String badgeImageSrc, int points, String name, int badgeID, String badgeDescription) {
         this.badgeImageSrc = badgeImageSrc;
+        this.points = points;
+        this.name = name;
+        this.badgeID = badgeID;
+        this.badgeDescription = badgeDescription;
+    }
+
+    public Badge(String badgeImageSrc, String unlockedImgSrc, int points, String name, int badgeID, String badgeDescription) {
+        this.badgeImageSrc = badgeImageSrc;
+        this.unlockedImgSrc = unlockedImgSrc;
         this.points = points;
         this.name = name;
         this.badgeID = badgeID;
@@ -48,5 +58,9 @@ public class Badge implements Serializable {
 
     public String getBadgeDescription() {
         return badgeDescription;
+    }
+
+    public String getUnlockedImgSrc() {
+        return unlockedImgSrc;
     }
 }

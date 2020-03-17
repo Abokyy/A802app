@@ -32,15 +32,17 @@ public class BadgeDescriptionDialogFragment extends DialogFragment {
     private TextView badgeDescription;
     private TextView badgePoints;
     private Badge badge;
+    private boolean unlocked;
     private Button unclockBtn;
 
     public  BadgeDescriptionDialogFragment (){}
 
-    public static BadgeDescriptionDialogFragment newInstance(Badge passedBadge) {
+    public static BadgeDescriptionDialogFragment newInstance(Badge passedBadge, boolean unlocked) {
         BadgeDescriptionDialogFragment fragment = new BadgeDescriptionDialogFragment();
 
         Bundle args = new Bundle();
         args.putSerializable("badge", passedBadge);
+        args.putBoolean("unlocked", unlocked);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,6 +51,7 @@ public class BadgeDescriptionDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         badge = (Badge) getArguments().getSerializable("badge");
+        unlocked = getArguments().getBoolean("unlocked");
     }
 
     @SuppressLint("SetTextI18n")
@@ -61,6 +64,14 @@ public class BadgeDescriptionDialogFragment extends DialogFragment {
         badgeName = v.findViewById(R.id.detailedBadgeName);
         badgePoints = v.findViewById(R.id.badgePointNumber);
         unclockBtn = v.findViewById(R.id.unlockBtn);
+        String imageToLoad = "";
+
+        if(unlocked) {
+            unclockBtn.setVisibility(View.GONE);
+            imageToLoad = badge.getUnlockedImgSrc();
+        } else {
+            imageToLoad = badge.getBadgeImageSrc();
+        }
 
         unclockBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +88,7 @@ public class BadgeDescriptionDialogFragment extends DialogFragment {
         badgeName.setText(badge.getName());
         badgeDescription.setText(badge.getBadgeDescription());
 
-        storageReference.child(badge.getBadgeImageSrc()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageReference.child(imageToLoad).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 // Got the download URL for 'users/me/profile.png'
@@ -91,6 +102,8 @@ public class BadgeDescriptionDialogFragment extends DialogFragment {
                 // Handle any errors
             }
         });
+
+
 
         return v;
     }

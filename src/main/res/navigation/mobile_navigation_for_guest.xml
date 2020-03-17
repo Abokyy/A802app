@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/navigation_team_structure"
+    android:id="@+id/mobile_navigation_for_guest">
+
+    <fragment
+        android:id="@+id/navigation_team_structure"
+        android:name="csapat.app.teamstructure.TeamStructureFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_team_structure" />
+
+    <fragment
+        android:id="@+id/navigation_events"
+        android:name="csapat.app.calendar.EventsFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_events" />
+
+    <fragment
+        android:id="@+id/navigation_news"
+        android:name="csapat.app.newsfeed.NewsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_news" />
+
+</navigation>

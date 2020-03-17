@@ -12,25 +12,30 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.List;
+import java.util.Arrays;
 
 import csapat.app.BaseCompat;
 import csapat.app.R;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static csapat.app.BaseCompat.storageReference;
 
-public class BadgeAdapter extends RecyclerView.Adapter<BadgeAdapter.BadgeViewHolder>{
+public class BadgeAdapter extends RecyclerView.Adapter<BadgeAdapter.BadgeViewHolder> {
 
     //private final List<String> badgeNames;
     private final List<Badge> badges;
+    private final List<Long> unlocked;
     private Context context;
     private OnBadgeViewItemSelectedListener listener;
 
-    public BadgeAdapter (List<Badge> badges, Context context, OnBadgeViewItemSelectedListener listener) {
+    public BadgeAdapter(List<Badge> badges, List<Long> unlocked, Context context, OnBadgeViewItemSelectedListener listener) {
         this.listener = listener;
+        this.unlocked = unlocked;
         this.badges = badges;
         this.context = context;
     }
@@ -50,7 +55,15 @@ public class BadgeAdapter extends RecyclerView.Adapter<BadgeAdapter.BadgeViewHol
         String item = badges.get(position).getName();
         holder.badgeName.setText(item);
 
-        storageReference.child(badges.get(position).getBadgeImageSrc()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        String imageToLoad;
+
+        if (unlocked.contains((long) holder.badge.getBadgeID())) {
+            imageToLoad = holder.badge.getUnlockedImgSrc();
+        } else {
+            imageToLoad = holder.badge.getBadgeImageSrc();
+        }
+
+        storageReference.child(imageToLoad).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 // Got the download URL for 'users/me/profile.png'
@@ -92,7 +105,7 @@ public class BadgeAdapter extends RecyclerView.Adapter<BadgeAdapter.BadgeViewHol
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(listener != null)
+                    if (listener != null)
                         listener.onBadgeItemSelected(badge);
                 }
             });

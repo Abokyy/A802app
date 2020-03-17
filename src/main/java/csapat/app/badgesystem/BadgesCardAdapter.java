@@ -22,6 +22,7 @@ import csapat.app.R;
 public class BadgesCardAdapter extends RecyclerView.Adapter<BadgesCardAdapter.BadgeCardViewHolder> implements BadgeAdapter.OnBadgeViewItemSelectedListener {
 
     private List<Badge> badgeList;
+    private List<Long> unlockedBadges;
     private RecyclerView.RecycledViewPool viewPool;
     private BadgeAdapter badgeAdapter;
     private BadgeAdapter.OnBadgeViewItemSelectedListener listener;
@@ -48,7 +49,7 @@ public class BadgesCardAdapter extends RecyclerView.Adapter<BadgesCardAdapter.Ba
                 badgeTriple.add(badgeList.get(position * 3 + i));
         }
 
-        badgeAdapter = new BadgeAdapter(badgeTriple, context, listener);
+        badgeAdapter = new BadgeAdapter(badgeTriple, unlockedBadges, context, listener);
         holder.recyclerView.setAdapter(badgeAdapter);
         holder.recyclerView.setRecycledViewPool(viewPool);
 
@@ -85,8 +86,9 @@ public class BadgesCardAdapter extends RecyclerView.Adapter<BadgesCardAdapter.Ba
 
     }
 
-    public BadgesCardAdapter(List<Badge> badges, Context context, Activity act, BadgeAdapter.OnBadgeViewItemSelectedListener listener) {
+    public BadgesCardAdapter(List<Badge> badges, List<Long> unlockedBadges, Context context, Activity act, BadgeAdapter.OnBadgeViewItemSelectedListener listener) {
         this.badgeList = badges;
+        this.unlockedBadges = unlockedBadges;
         this.act = act;
         this.context = context;
         this.listener = listener;

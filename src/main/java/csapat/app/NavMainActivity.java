@@ -25,6 +25,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import java.util.Calendar;
@@ -65,10 +66,13 @@ public class NavMainActivity extends BaseCompat {
             setContentView(R.layout.activity_nav_main);
 
 
+            NavController navController = null;
             BottomNavigationView navView = findViewById(R.id.nav_view);
             try {
 
                 if (appUser.getRank() > 1) {
+                    findViewById(R.id.nav_host_fragment_for_guests).setVisibility(View.GONE);
+                    navController = Navigation.findNavController(this, R.id.nav_host_fragment);
                     navView.getMenu().clear();
                     navView.inflateMenu(R.menu.bottom_nav_menu_for_leader);
 
@@ -87,7 +91,14 @@ public class NavMainActivity extends BaseCompat {
                             }
                         });
                     }
+                } else {
+                    findViewById(R.id.nav_host_fragment_for_guests).setVisibility(View.GONE);
+                    navController = Navigation.findNavController(this, R.id.nav_host_fragment);
                 }
+
+                assert navController != null;
+                NavigationUI.setupWithNavController(navView, navController);
+
             } catch (Exception e) {
 
                 Log.d("Exception", "cathced");
@@ -95,8 +106,17 @@ public class NavMainActivity extends BaseCompat {
 
             try {
                 if (appUser.getUsername().equals("802guest")) {
+                    findViewById(R.id.nav_host_fragment).setVisibility(View.GONE);
+                    findViewById(R.id.nav_host_fragment_for_guests).setVisibility(View.VISIBLE);
                     navView.getMenu().clear();
+                    navController = Navigation.findNavController(this, R.id.nav_host_fragment_for_guests);
+                    navView.inflateMenu(R.menu.bottom_nav_menu_for_guest);
+                    assert navController != null;
+                    NavigationUI.setupWithNavController(navView, navController);
                 }
+
+
+
             } catch (Exception e) {
 
             }
@@ -107,9 +127,7 @@ public class NavMainActivity extends BaseCompat {
         /*AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_teamstructure, R.id.navigation_events, R.id.navigation_news, R.id.navigation_edit_profile)
                 .build();*/
-            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
             //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-            NavigationUI.setupWithNavController(navView, navController);
         }
 
 

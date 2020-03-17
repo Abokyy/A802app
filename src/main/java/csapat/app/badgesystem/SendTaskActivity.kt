@@ -47,7 +47,7 @@ class SendTaskActivity : BaseCompat() {
             if (image != null) {
                 val taskSolution = TaskSolution(taskSolutionET.text.toString(),
                         appUser.userID, intent.getIntExtra("badgeID", 0),
-                        "task_solutions/${appUser.userID}_${appUser.patrol}_${intent.getIntExtra("badgeID", 0)}")
+                        "task_solutions/${appUser.userID}_${appUser.patrol}_${intent.getIntExtra("badgeID", 0)}", "")
 
                 db.collection("taskSolutions").document("${taskSolution.taskSubmitterUserID} For Badge ${taskSolution.badgeID}").set(taskSolution)
                 val uploadTask = storageReference.child("task_solutions/${taskSolution.taskSubmitterUserID}_${appUser.patrol}_${taskSolution.badgeID}").putFile(image!!)
