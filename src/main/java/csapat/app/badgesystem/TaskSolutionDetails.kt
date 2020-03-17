@@ -3,6 +3,7 @@ package csapat.app.badgesystem
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -27,6 +28,11 @@ class TaskSolutionDetails : BaseCompat() {
         showProgressDialog()
 
         val taskSolution = intent.getSerializableExtra("TaskSolution") as? TaskSolution
+
+        if (intent.getIntExtra("taskDetailMode", 0) == 1) {
+            acceptTask.visibility = View.GONE
+            refuseTask.visibility = View.GONE
+        }
 
 
         if (taskSolution != null) {
@@ -81,7 +87,7 @@ class TaskSolutionDetails : BaseCompat() {
 
                     }
 
-                    val dialog : AlertDialog = builder.create()
+                    val dialog: AlertDialog = builder.create()
                     dialog.show()
 
 

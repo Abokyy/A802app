@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/welcomeFragcontainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WelcomeFragment"
+    android:background="@color/colorPrimaryDark">
+
+    <LinearLayout
+        android:id="@+id/welcomeFragLL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <Button
+            android:id="@+id/showTeamStructureBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Csapat felépítése"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/showBadgesBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kitűzők"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/showMyTaskSolutionsBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Beadott feladataim"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/showScoreboardBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ranglista"/>
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

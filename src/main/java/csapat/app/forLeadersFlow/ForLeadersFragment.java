@@ -36,12 +36,13 @@ public class ForLeadersFragment extends Fragment {
         Button nextMeetingAttBtn = root.findViewById(R.id.nextMeetingAttBtn);
         Button projectorBtn = root.findViewById(R.id.projectorBtn);
         Button ach = root.findViewById(R.id.home_orderBtn);
-        Button submittedTasks = root.findViewById(R.id.allSubmittedTaskBtn);
+        final Button submittedTasks = root.findViewById(R.id.allSubmittedTaskBtn);
 
         submittedTasks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent submittedTasksIntent = new Intent(getActivity(), TaskListActivity.class);
+                submittedTasksIntent.putExtra("taskListingMode", 2);
                 startActivity(submittedTasksIntent);
             }
         });

@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -95,8 +96,6 @@ public class NavMainActivity extends BaseCompat {
             try {
                 if (appUser.getUsername().equals("802guest")) {
                     navView.getMenu().clear();
-                    navView.inflateMenu(R.menu.bottom_nav_menu_for_guest);
-
                 }
             } catch (Exception e) {
 

@@ -15,6 +15,7 @@ class TaskListActivity : BaseCompat(), TaskItemAdapter.taskItemClickListener {
 
     private val taskList = mutableListOf<TaskSolution>()
     private val taskIDList = mutableListOf<String>()
+    private var viewMode : Int = 0
     private val TAG = "TaskListActivity"
 
 
@@ -22,12 +23,12 @@ class TaskListActivity : BaseCompat(), TaskItemAdapter.taskItemClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_list)
 
-        if (appUser.rank < 2) {
-            acceptTask.visibility = View.GONE
-            refuseTask.visibility = View.GONE
-            readDataForUser()
-        } else {
-            readDataForLeaders()
+        viewMode = intent.getIntExtra("taskListingMode", 0)
+
+        when (viewMode) {
+            1 -> readDataForUser()
+
+            2 -> readDataForLeaders()
         }
 
 
@@ -129,6 +130,7 @@ class TaskListActivity : BaseCompat(), TaskItemAdapter.taskItemClickListener {
         val intent = Intent(this, TaskSolutionDetails::class.java).apply {
             putExtra("TaskSolution", taskSolution)
             putExtra("TaskSolutionID", taskIDList[taskList.indexOf(taskSolution)])
+            putExtra("taskDetailMode", viewMode)
         }
         startActivity(intent)
     }

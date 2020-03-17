@@ -2,14 +2,14 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@+id/navigation_teamstructure"
+    app:startDestination="@+id/navigation_general"
     android:id="@+id/mobile_navigation_for_leader">
 
     <fragment
-        android:id="@+id/navigation_teamstructure"
-        android:name="csapat.app.teamstructure.TeamStructureFragment"
+        android:id="@+id/navigation_general"
+        android:name="csapat.app.WelcomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_team_structure" />
+        tools:layout="@layout/fragment_welcome" />
 
     <fragment
         android:id="@+id/navigation_events"

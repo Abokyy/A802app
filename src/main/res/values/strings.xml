@@ -141,4 +141,5 @@
     <string name="unlock">Feloldás</string>
     <string name="submitted_tasks">Beküldött feladatok</string>
     <string name="imagefortasksolution">ImageForTaskSolution</string>
+    <string name="title_home_nav">Általános</string>
 </resources>
