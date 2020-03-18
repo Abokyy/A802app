@@ -2,6 +2,7 @@ package csapat.app.badgesystem
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +46,7 @@ class TaskItemAdapter (val taskList : MutableList<TaskSolution>, val taskIDList 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = taskList[position]
         holder.taskSolution = task
+        if(task.refuseResponse != "") holder.itemView.setBackgroundColor(Color.parseColor("#580000"))
         val submitterUserID = task.taskSubmitterUserID
         FirebaseFirestore.getInstance().collection("users").document(submitterUserID)
                 .get()

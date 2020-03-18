@@ -32,7 +32,18 @@ class ScoreboardActivity : BaseCompat() {
 
     private fun initRecyclerView() {
         scoreBoardRecyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter = ScoreboardItemAdapter(userTriples, this)
+        val sortedList : MutableList<Triple<String, String, Long>> = sortScoreBoard(userTriples)
+        val adapter = ScoreboardItemAdapter(sortedList, this)
         scoreBoardRecyclerView.adapter = adapter
+    }
+
+    private fun sortScoreBoard(userTriples: MutableList<Triple<String, String, Long>>): MutableList<Triple<String, String, Long>> {
+
+        var sorted = userTriples.sortedByDescending { it.third }
+
+        val returnList = mutableListOf<Triple<String, String, Long>>()
+        for(item in sorted)
+            returnList.add(item)
+        return returnList
     }
 }

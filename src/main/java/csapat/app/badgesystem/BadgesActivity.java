@@ -2,6 +2,7 @@ package csapat.app.badgesystem;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ViewTreeObserver;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -64,7 +65,7 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                                         unlockedBadges = (List<Long>) documentSnapshot.get("achievedBadges");
                                         initRecyclerView();
-                                        hideProgressDialog();
+                                        //hideProgressDialog();
                                     }
                                 });
 
@@ -81,6 +82,14 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
         recyclerView = findViewById(R.id.badge_list_View);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(badgesCardAdapter);
+        recyclerView.getViewTreeObserver()
+                .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        hideProgressDialog();
+                        recyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
+                });
     }
 
     public void showBadgeDescrDialog(Badge badge) {

@@ -34,7 +34,7 @@
 
 
                 <ImageView
-                    android:id="@+id/new_profile_picture"
+                    android:id="@+id/edit_new_profile_picture"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
@@ -44,7 +44,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/profile_FullName"
+                    android:id="@+id/edit_profile_FullName"
                     android:textColor="#fff"
                     android:textStyle="bold"
                     android:textSize="21sp"/>
@@ -156,14 +156,14 @@
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:src="@drawable/hierarchy"/>
+                    android:src="@drawable/teamwork"/>
                 <TextView
                     android:textStyle="bold"
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp"
-                    android:id="@+id/profile_patrol_member_at"/>
+                    android:id="@+id/edit_profile_patrol_member_at"/>
             </LinearLayout>
             <!--<LinearLayout
                 android:layout_marginTop="25dp"
@@ -185,7 +185,7 @@
                     android:id="@+id/profile_rank"/>
             </LinearLayout>-->
             <LinearLayout
-                android:id="@+id/profile_patrol_leader_at_layout"
+                android:id="@+id/edit_profile_patrol_leader_at_layout"
                 android:layout_marginTop="25dp"
                 android:orientation="horizontal"
                 android:paddingStart="25dp"
@@ -195,7 +195,7 @@
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:src="@drawable/newsfeed"/>
+                    android:src="@drawable/leadericon"/>
                 <TextView
                     android:textStyle="bold"
 
@@ -203,10 +203,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp"
-                    android:id="@+id/profile_patrol_leader_at" />
+                    android:id="@+id/edit_profile_patrol_leader_at" />
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/profile_troop_leader_at_layout"
+                android:id="@+id/edit_profile_troop_leader_at_layout"
                 android:layout_marginTop="25dp"
                 android:orientation="horizontal"
                 android:paddingStart="25dp"
@@ -216,7 +216,7 @@
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:src="@drawable/newsfeed"/>
+                    android:src="@drawable/troop_leader"/>
                 <TextView
                     android:textStyle="bold"
 
@@ -224,7 +224,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp"
-                    android:id="@+id/profile_troop_leader_at"/>
+                    android:id="@+id/edit_profile_troop_leader_at"/>
             </LinearLayout>
 
         </LinearLayout>

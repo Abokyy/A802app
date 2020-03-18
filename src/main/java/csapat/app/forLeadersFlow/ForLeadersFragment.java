@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import csapat.app.R;
 import csapat.app.badgesystem.BadgesActivity;
@@ -35,7 +36,7 @@ public class ForLeadersFragment extends Fragment {
 
         Button nextMeetingAttBtn = root.findViewById(R.id.nextMeetingAttBtn);
         Button projectorBtn = root.findViewById(R.id.projectorBtn);
-        Button ach = root.findViewById(R.id.home_orderBtn);
+        Button homeOrder = root.findViewById(R.id.home_orderBtn);
         final Button submittedTasks = root.findViewById(R.id.allSubmittedTaskBtn);
 
         submittedTasks.setOnClickListener(new View.OnClickListener() {
@@ -47,11 +48,10 @@ public class ForLeadersFragment extends Fragment {
             }
         });
 
-        ach.setOnClickListener(new View.OnClickListener() {
+        homeOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent temp = new Intent(getActivity(), BadgesActivity.class);
-                startActivity(temp);
+                Toast.makeText(getActivity(), "Hamarosan", Toast.LENGTH_LONG).show();
             }
         });
 

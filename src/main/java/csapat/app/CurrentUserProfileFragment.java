@@ -101,7 +101,7 @@ public class CurrentUserProfileFragment extends Fragment {
         int userRank = user.getRank();
 
 
-        memberAtPatrol.setText("Tagja a " + user.getPatrol() + " őrsnek.");
+        memberAtPatrol.setText("Tagja vagy a " + user.getPatrol() + " őrsnek.");
         switch (userRank) {
             case 1:
                 patrolLeaderAtLayout.setVisibility(View.INVISIBLE);
@@ -116,13 +116,13 @@ public class CurrentUserProfileFragment extends Fragment {
 
             case 3:
                 troopLeaderAtLayout.setVisibility(View.INVISIBLE);
-                patrolLeaderAt.setText("Vezetője a " + user.getPatrolLeaderAt() + " őrsnek.");
+                patrolLeaderAt.setText("Vezetője vagy a " + user.getPatrolLeaderAt() + " őrsnek.");
                 //rank.setText(R.string.patrolLeader);
                 break;
 
             case 4:
-                patrolLeaderAt.setText("Vezetője a " + user.getPatrolLeaderAt() + " őrsnek.");
-                troopLeaderAt.setText("Parancsnoka a " + user.getTroopLeaderAt() + " rajnak.");
+                patrolLeaderAt.setText("Vezetője vagy a " + user.getPatrolLeaderAt() + " őrsnek.");
+                troopLeaderAt.setText("Parancsnoka vagy a " + user.getTroopLeaderAt() + " rajnak.");
                 //rank.setText(R.string.troop_leader);
                 break;
 

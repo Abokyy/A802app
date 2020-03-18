@@ -18,6 +18,8 @@
             android:id="@+id/showTeamStructureBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/hierarchy"
+            android:drawableTint="@color/colorSecondary"
             android:text="Csapat felépítése"
             android:layout_marginBottom="20dp"/>
 
@@ -25,6 +27,9 @@
             android:id="@+id/showBadgesBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/scout_badge"
+            android:drawableTint="@color/colorSecondary"
+
             android:text="Kitűzők"
             android:layout_marginBottom="20dp"/>
 
@@ -32,6 +37,9 @@
             android:id="@+id/showMyTaskSolutionsBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/list"
+            android:drawableTint="@color/colorSecondary"
+
             android:text="Beadott feladataim"
             android:layout_marginBottom="20dp"/>
 
@@ -39,6 +47,8 @@
             android:id="@+id/showScoreboardBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableTint="@color/colorSecondary"
+            android:drawableLeft="@drawable/scoreboard_icon"
             android:text="Ranglista"/>
 
 

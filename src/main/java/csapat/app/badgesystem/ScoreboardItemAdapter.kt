@@ -1,5 +1,6 @@
 package csapat.app.badgesystem
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -23,10 +24,11 @@ class ScoreboardItemAdapter (val userList : MutableList<Triple<String, String, L
         return userList.size
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ScoreboardItemViewHolder, position: Int) {
         val userToShow = userList[position]
         holder.userToShow = userToShow
-        holder.userFullName.text = userToShow.first
+        holder.userFullName.text = "${position + 1}. ${userToShow.first}"
         holder.userPatrol.text = userToShow.second
         holder.userScore.text = userToShow.third.toString()
     }

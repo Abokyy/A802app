@@ -2,6 +2,7 @@ package csapat.app;
 
 import androidx.annotation.NonNull;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -10,11 +11,13 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,6 +25,8 @@ import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -41,7 +46,9 @@ public class EditProfileActivity extends BaseCompat {
 
         Button changeProfilePic = findViewById(R.id.change_profile_pic_btn);
 
-        imageView = findViewById(R.id.new_profile_picture);
+        imageView = findViewById(R.id.edit_new_profile_picture);
+
+        initTextViews();
 
 
         FloatingActionButton fab = findViewById(R.id.profile_saving_floating_button);
@@ -60,6 +67,53 @@ public class EditProfileActivity extends BaseCompat {
                 chooseImage();
             }
         });
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void initTextViews() {
+
+        TextView profileFullName = findViewById(R.id.edit_profile_FullName);
+        TextView memberAtPatrol = findViewById(R.id.edit_profile_patrol_member_at);
+        TextView patrolLeaderAt = findViewById(R.id.edit_profile_patrol_leader_at);
+        TextView troopLeaderAt = findViewById(R.id.edit_profile_troop_leader_at);
+        View patrolLeaderAtLayout = findViewById(R.id.edit_profile_patrol_leader_at_layout);
+        View troopLeaderAtLayout = findViewById(R.id.edit_profile_troop_leader_at_layout);
+
+        profileFullName.setText(appUser.getFullName());
+        int userRank = appUser.getRank();
+
+        memberAtPatrol.setText("Tagja vagy a " + appUser.getPatrol() + " őrsnek.");
+        switch (userRank) {
+            case 1:
+                patrolLeaderAtLayout.setVisibility(View.INVISIBLE);
+                troopLeaderAtLayout.setVisibility(View.INVISIBLE);
+                //rank.setText(R.string.member);
+                break;
+
+            case 2:
+                patrolLeaderAtLayout.setVisibility(View.INVISIBLE);
+                troopLeaderAtLayout.setVisibility(View.INVISIBLE);
+                //rank.setText(R.string.sub_leader);
+
+            case 3:
+                troopLeaderAtLayout.setVisibility(View.INVISIBLE);
+                patrolLeaderAt.setText("Vezetője vagy a " + appUser.getPatrolLeaderAt() + " őrsnek.");
+                //rank.setText(R.string.patrolLeader);
+                break;
+
+            case 4:
+                patrolLeaderAt.setText("Vezetője vagy a " + appUser.getPatrolLeaderAt() + " őrsnek.");
+                troopLeaderAt.setText("Parancsnoka vagy a " + appUser.getTroopLeaderAt() + " rajnak.");
+                //rank.setText(R.string.troop_leader);
+                break;
+
+            case 5:
+                //rank.setText(R.string.team_leader);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + userRank);
+        }
+
     }
 
     private void chooseImage() {
@@ -82,6 +136,27 @@ public class EditProfileActivity extends BaseCompat {
                 e.printStackTrace();
             }
         }
+
+        /*if (appUser.getProfile_picture() != null) {
+
+            BaseCompat.storageReference.child(appUser.getProfile_picture()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
+                    Glide.with(EditProfileActivity.this)
+                            .load(uri)
+                            .into(imageView);
+
+                    //hideProgressDialog();
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }*/
     }
 
     private void uploadImage() {
