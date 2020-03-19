@@ -15,7 +15,7 @@ class TaskListActivity : BaseCompat(), TaskItemAdapter.taskItemClickListener {
 
     private val taskList = mutableListOf<TaskSolution>()
     private val taskIDList = mutableListOf<String>()
-    private var viewMode : Int = 0
+    private var viewMode: Int = 0
     private val TAG = "TaskListActivity"
 
 
@@ -37,7 +37,7 @@ class TaskListActivity : BaseCompat(), TaskItemAdapter.taskItemClickListener {
     private fun readDataForUser() {
 
         db.collection("taskSolutions")
-                .whereEqualTo("taskSubmitterUserID", appUser.userID)
+                .whereIn("taskSubmitterUserID", listOf(appUser.userID, appUser.patrol))
                 .get()
                 .addOnSuccessListener { documents ->
                     for (document in documents) {
@@ -74,7 +74,7 @@ class TaskListActivity : BaseCompat(), TaskItemAdapter.taskItemClickListener {
         when (mode) {
             1 -> {
                 db.collection("taskSolutions")
-                        .whereEqualTo("taskSubmitterUserID", appUser.userID)
+                        .whereIn("taskSubmitterUserID", listOf(appUser.userID, appUser.patrol))
                         .addSnapshotListener { snapshots, e ->
                             if (e != null) {
                                 Log.w(TAG, "listen:error", e)

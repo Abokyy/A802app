@@ -4,53 +4,118 @@
     android:id="@+id/welcomeFragcontainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WelcomeFragment"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorPrimaryDark"
+    tools:context=".WelcomeFragment">
 
     <LinearLayout
         android:id="@+id/welcomeFragLL"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="30dp">
+        android:padding="35dp">
 
-        <Button
-            android:id="@+id/showTeamStructureBtn"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/hierarchy"
-            android:drawableTint="@color/colorSecondary"
-            android:text="Csapat felépítése"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="25dp"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/showBadgesBtn"
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:adjustViewBounds="true"
+                android:maxWidth="50dp"
+                android:maxHeight="50dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/hierarchy"
+                android:tint="@color/colorSecondary" />
+
+            <Button
+                android:id="@+id/showTeamStructureBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Csapat felépítése" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/scout_badge"
-            android:drawableTint="@color/colorSecondary"
+            android:layout_marginBottom="25dp"
+            android:orientation="horizontal">
 
-            android:text="Kitűzők"
-            android:layout_marginBottom="20dp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:adjustViewBounds="true"
+                android:maxWidth="50dp"
+                android:maxHeight="50dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/scout"
+                android:tint="@color/colorSecondary" />
 
-        <Button
-            android:id="@+id/showMyTaskSolutionsBtn"
+            <Button
+                android:id="@+id/showBadgesBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kitűzők" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/list"
-            android:drawableTint="@color/colorSecondary"
+            android:layout_marginBottom="25dp"
+            android:orientation="horizontal">
 
-            android:text="Beadott feladataim"
-            android:layout_marginBottom="20dp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:adjustViewBounds="true"
+                android:maxWidth="50dp"
+                android:maxHeight="50dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/list_big"
+                android:tint="@color/colorSecondary" />
 
-        <Button
-            android:id="@+id/showScoreboardBtn"
+            <Button
+                android:id="@+id/showMyTaskSolutionsBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Beadott feladataim" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableTint="@color/colorSecondary"
-            android:drawableLeft="@drawable/scoreboard_icon"
-            android:text="Ranglista"/>
+            android:layout_marginBottom="25dp"
+            android:orientation="horizontal">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:adjustViewBounds="true"
+                android:maxWidth="50dp"
+                android:maxHeight="50dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/podium"
+                android:tint="@color/colorSecondary" />
+
+
+            <Button
+                android:id="@+id/showScoreboardBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ranglista" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

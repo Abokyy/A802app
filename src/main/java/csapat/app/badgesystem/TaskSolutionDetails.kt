@@ -26,13 +26,14 @@ class TaskSolutionDetails : BaseCompat() {
 
     private var taskSubmitterUser: AppUser? = null
     private lateinit var taskSolutionID: String
+    private lateinit var taskSolution: TaskSolution
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_solution_details)
         showProgressDialog()
 
-        val taskSolution = intent.getSerializableExtra("TaskSolution") as? TaskSolution
+        taskSolution = intent.getSerializableExtra("TaskSolution") as TaskSolution
         taskSolutionID = intent.getStringExtra("TaskSolutionID") as String
 
         if (intent.getIntExtra("taskDetailMode", 0) == 1) {
@@ -40,44 +41,84 @@ class TaskSolutionDetails : BaseCompat() {
             refuseTask.visibility = View.GONE
         }
 
-        if (taskSolution != null) {
+        refuseResponseTV.text = taskSolution.refuseResponse
+        var solvedBadgeLevel: Long? = null
 
-            refuseResponseTV.text = taskSolution.refuseResponse
-
-            db.collection("users").document(taskSolution.taskSubmitterUserID)
-                    .get()
-                    .addOnSuccessListener { documentSnapshot ->
-                        taskSubmitterUser = documentSnapshot.toObject(AppUser::class.java)
-                    }
-
-            taskSolutionDetailTV.text = taskSolution.solutionDescription
-
-            if (taskSolution.imagePath != "noimage") {
-                val imageView = findViewById<ImageView>(R.id.taskSolutionDetailImage)
-
-
-                storageReference.child(taskSolution.imagePath).downloadUrl.addOnSuccessListener { uri ->
-                    Glide.with(this)
-                            .load(uri)
-                            .into(imageView)
-                    hideProgressDialog()
+        db.collection("badges").document(taskSolution.badgeID.toString())
+                .get()
+                .addOnSuccessListener { documentSnapshot ->
+                    solvedBadgeLevel = documentSnapshot.getLong("level")
+                    handleBadgeLevel(solvedBadgeLevel)
                 }
 
+        taskSolutionDetailTV.text = taskSolution.solutionDescription
+
+        if (taskSolution.imagePath != "noimage") {
+            val imageView = findViewById<ImageView>(R.id.taskSolutionDetailImage)
 
 
-                acceptTask.setOnClickListener {
+            storageReference.child(taskSolution.imagePath).downloadUrl.addOnSuccessListener { uri ->
+                Glide.with(this)
+                        .load(uri)
+                        .into(imageView)
+                hideProgressDialog()
+            }
+        }
+
+        refuseTask.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            val editText = EditText(this@TaskSolutionDetails)
+            builder.setView(editText)
+            builder.setTitle("Elutasítás")
+            builder.setMessage("Miért nem fogadod el a megoldást?")
+
+            builder.setPositiveButton("Elutasítás") { dialog, which ->
+                db.collection("taskSolutions").document(taskSolutionID)
+                        .update("refuseResponse", "Elutasítva: ${editText.text}")
+
+                val snackbar = Snackbar.make(findViewById(R.id.taskSolutionDetailsRootLayout), "Megoldás elutasítva", Snackbar.LENGTH_SHORT)
+
+                snackbar.addCallback(object : Snackbar.Callback() {
+                    override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                        super.onDismissed(transientBottomBar, event)
+                        finish()
+                    }
+                })
+                snackbar.show()
+            }
+
+
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
+        }
+
+
+    }
+
+    private fun handleBadgeLevel(solvedBadgeLevel: Long?) {
+
+        db.collection("users").document(taskSolution.taskSubmitterUserID)
+                .get()
+                .addOnSuccessListener { documentSnapshot ->
+                    taskSubmitterUser = documentSnapshot.toObject(AppUser::class.java)
+                }
+
+        acceptTask.setOnClickListener {
+
+
+            when (solvedBadgeLevel) {
+                1L -> {
                     val builder = AlertDialog.Builder(this)
-                    val solvedBadges = taskSubmitterUser?.achievedBadges
-                    solvedBadges?.add(taskSolution.badgeID)
-
                     builder.setTitle("Elfogadás")
                     builder.setMessage("Biztosan elfogadod a beadott megoldást?")
-
                     builder.setPositiveButton("Igen") { dialog, which ->
+
+                        val solvedBadges = taskSubmitterUser?.achievedBadges
+                        solvedBadges?.add(taskSolution.badgeID)
 
                         val ref = db.collection("users").document(taskSolution.taskSubmitterUserID)
 
-                        var incr: Long = 0L
+                        var incr = 0L
                         db.collection("badges").document(taskSolution.badgeID.toString())
                                 .get()
                                 .addOnSuccessListener { documentSnapshot ->
@@ -86,13 +127,9 @@ class TaskSolutionDetails : BaseCompat() {
                                     ref.update("score", FieldValue.increment(incr))
                                 }
 
-
-
-
                         db.collection("taskSolutions").document(taskSolutionID)
                                 .delete()
                         storageReference.child(taskSolution.imagePath).delete()
-
                         val snackbar = Snackbar.make(findViewById(R.id.taskSolutionDetailsRootLayout), "Megoldás elfogadva", Snackbar.LENGTH_SHORT)
 
                         snackbar.addCallback(object : Snackbar.Callback() {
@@ -102,8 +139,6 @@ class TaskSolutionDetails : BaseCompat() {
                             }
                         })
                         snackbar.show()
-
-
                     }
 
                     builder.setNegativeButton("Mégsem") { dialog, which ->
@@ -112,22 +147,38 @@ class TaskSolutionDetails : BaseCompat() {
 
                     val dialog: AlertDialog = builder.create()
                     dialog.show()
-
-
                 }
-
-                refuseTask.setOnClickListener {
+                2L -> {
                     val builder = AlertDialog.Builder(this)
-                    val editText = EditText(this@TaskSolutionDetails)
-                    builder.setView(editText)
-                    builder.setTitle("Elutasítás")
-                    builder.setMessage("Miért nem fogadod el a megoldást?")
+                    builder.setTitle("Elfogadás")
+                    builder.setMessage("Biztosan elfogadod a beadott megoldást?")
+                    builder.setPositiveButton("Igen") { dialog, which ->
 
-                    builder.setPositiveButton("Elutasítás") { dialog, which ->
+                        var solvedBadges: MutableList<Int>
+
+                        db.collection("patrols").document(taskSolution.taskSubmitterUserID)
+                                .get()
+                                .addOnSuccessListener { documentSnapshot ->
+                                    solvedBadges = documentSnapshot.get("achievedBadges") as MutableList<Int>
+                                    solvedBadges.add(taskSolution.badgeID)
+
+
+                                    val ref = db.collection("patrols").document(taskSolution.taskSubmitterUserID)
+
+                                    var incr = 0L
+                                    db.collection("badges").document(taskSolution.badgeID.toString())
+                                            .get()
+                                            .addOnSuccessListener { documentSnapshot ->
+                                                incr = documentSnapshot.get("points") as Long
+                                                ref.update("achievedBadges", solvedBadges)
+                                                ref.update("score", FieldValue.increment(incr))
+                                            }
+                                }
+
                         db.collection("taskSolutions").document(taskSolutionID)
-                                .update("refuseResponse", "Elutasítva: ${editText.text}")
-
-                        val snackbar = Snackbar.make(findViewById(R.id.taskSolutionDetailsRootLayout), "Megoldás elutasítva", Snackbar.LENGTH_SHORT)
+                                .delete()
+                        storageReference.child(taskSolution.imagePath).delete()
+                        val snackbar = Snackbar.make(findViewById(R.id.taskSolutionDetailsRootLayout), "Megoldás elfogadva", Snackbar.LENGTH_SHORT)
 
                         snackbar.addCallback(object : Snackbar.Callback() {
                             override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
@@ -138,17 +189,19 @@ class TaskSolutionDetails : BaseCompat() {
                         snackbar.show()
                     }
 
+                    builder.setNegativeButton("Mégsem") { dialog, which ->
+                        dialog.dismiss()
+                    }
 
                     val dialog: AlertDialog = builder.create()
                     dialog.show()
                 }
-
             }
-        } else {
-            taskSolutionDetailTV.text = "tasksolution null"
-            hideProgressDialog()
-        }
 
+
+
+
+        }
 
     }
 }

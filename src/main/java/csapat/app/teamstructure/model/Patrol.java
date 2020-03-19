@@ -15,6 +15,8 @@ public class Patrol {
     private int meetingMinute;
     private String meetingLocation;
     private boolean activePatrol = true;
+    private List<Long> achievedBadges = new ArrayList<Long>(0);
+    private int score = 0;
 
 
 
@@ -63,6 +65,37 @@ public class Patrol {
         this.activePatrol = activePatrol;
     }
 
+    public Patrol(String leader, List<String> members, List<String> nextMeetingAttendance, String name, int meetingDay, int meetingHour, int meetingMinute, String meetingLocation, boolean activePatrol, List<Long> achievedBadges) {
+        this.leader = leader;
+        this.members = members;
+        this.nextMeetingAttendance = nextMeetingAttendance;
+        this.name = name;
+        this.meetingDay = meetingDay;
+        this.meetingHour = meetingHour;
+        this.meetingMinute = meetingMinute;
+        this.meetingLocation = meetingLocation;
+        this.activePatrol = activePatrol;
+        this.achievedBadges = achievedBadges;
+    }
+
+    public Patrol(String leader, List<String> members, List<String> nextMeetingAttendance, String name, int meetingDay, int meetingHour, int meetingMinute, String meetingLocation, boolean activePatrol, List<Long> achievedBadges, int score) {
+        this.leader = leader;
+        this.members = members;
+        this.nextMeetingAttendance = nextMeetingAttendance;
+        this.name = name;
+        this.meetingDay = meetingDay;
+        this.meetingHour = meetingHour;
+        this.meetingMinute = meetingMinute;
+        this.meetingLocation = meetingLocation;
+        this.activePatrol = activePatrol;
+        this.achievedBadges = achievedBadges;
+        this.score = score;
+    }
+
+    public List<Long> getAchievedBadges() {
+        return achievedBadges;
+    }
+
     public String getLeader() {
         return leader;
     }
@@ -97,5 +130,9 @@ public class Patrol {
 
     public boolean isActivePatrol() {
         return activePatrol;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

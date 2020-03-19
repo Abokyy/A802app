@@ -14,10 +14,10 @@ import csapat.app.R
 import csapat.app.teamstructure.model.AppUser
 import kotlinx.android.synthetic.main.item_task_card.view.*
 
-class TaskItemAdapter (val taskList : MutableList<TaskSolution>, val taskIDList : MutableList<String>, val context : Context) :
+class TaskItemAdapter(val taskList: MutableList<TaskSolution>, val taskIDList: MutableList<String>, val context: Context) :
         RecyclerView.Adapter<TaskItemAdapter.TaskViewHolder>() {
 
-    var itemClickListener : taskItemClickListener? = null
+    var itemClickListener: taskItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         return TaskViewHolder(LayoutInflater.from(context).inflate(R.layout.item_task_card, parent, false))
@@ -46,14 +46,18 @@ class TaskItemAdapter (val taskList : MutableList<TaskSolution>, val taskIDList 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = taskList[position]
         holder.taskSolution = task
-        if(task.refuseResponse != "") holder.itemView.setBackgroundColor(Color.parseColor("#580000"))
+        if (task.refuseResponse != "") holder.itemView.setBackgroundColor(Color.parseColor("#580000"))
         val submitterUserID = task.taskSubmitterUserID
-        FirebaseFirestore.getInstance().collection("users").document(submitterUserID)
-                .get()
-                .addOnSuccessListener { document ->
-                    holder.submitterUser = document.toObject(AppUser::class.java)
-                    holder.taskText.text = "${holder.submitterUser?.fullName} megoldása a ${task.badgeID} kitűzőre"
-                }
+        if (submitterUserID.length == 20) {
+            FirebaseFirestore.getInstance().collection("users").document(submitterUserID)
+                    .get()
+                    .addOnSuccessListener { document ->
+                        holder.submitterUser = document.toObject(AppUser::class.java)
+                        holder.taskText.text = "${holder.submitterUser?.fullName} megoldása a ${task.badgeID} kitűzőre"
+                    }
+        } else {
+            holder.taskText.text = "$submitterUserID őrs megoldása a ${task.badgeID} kitűzőre"
+        }
 
     }
 
@@ -61,11 +65,11 @@ class TaskItemAdapter (val taskList : MutableList<TaskSolution>, val taskIDList 
         fun onItemClick(taskSolution: TaskSolution)
     }
 
-    inner class TaskViewHolder (view : View) : RecyclerView.ViewHolder(view) {
+    inner class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         var taskSolution: TaskSolution? = null
         val taskText = view.task_card_text
-        var submitterUser : AppUser? = null
+        var submitterUser: AppUser? = null
 
         init {
             view.setOnClickListener {
@@ -73,7 +77,6 @@ class TaskItemAdapter (val taskList : MutableList<TaskSolution>, val taskIDList 
             }
         }
     }
-
 
 
 }

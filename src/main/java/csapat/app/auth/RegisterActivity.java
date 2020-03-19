@@ -196,7 +196,9 @@ public class RegisterActivity extends BaseCompat {
         user.put("rank", 1);
         user.put("email", email);
         user.put("username", un);
-
+        user.put("score", 0);
+        user.put("answeredNextMeetingRequest", false);
+        user.put("achievedBadges", new ArrayList<Long>(0));
 
         db.collection("users")
                 .add(user)

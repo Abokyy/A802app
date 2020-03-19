@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,6 +48,8 @@ public class NavMainActivity extends BaseCompat {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        MobileAds.initialize(this, getString(R.string.ADMOB_APP_ID));
 
         notificationManagerCompat = NotificationManagerCompat.from(this);
         createNotificationChannel();

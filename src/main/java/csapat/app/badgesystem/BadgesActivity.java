@@ -3,6 +3,7 @@ package csapat.app.badgesystem;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -26,11 +27,16 @@ import csapat.app.R;
 
 public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeViewItemSelectedListener {
 
-    private RecyclerView recyclerView;
-    private BadgesCardAdapter badgesCardAdapter;
-    private RecyclerView.LayoutManager layoutManager;
-    private List<Badge> allBadge;
-    private List<Long> unlockedBadges;
+    private RecyclerView personalRecyclerView;
+    private RecyclerView patrolRecyclerView;
+    private BadgesCardAdapter personalBadgesCardAdapter;
+    private BadgesCardAdapter patrolBadgesCardAdapter;
+    private RecyclerView.LayoutManager personallayoutManager;
+    private RecyclerView.LayoutManager patrollayoutManager;
+    private List<Badge> allpersonalBadge;
+    private List<Badge> allPatrolBadges;
+    private List<Long> unlockedPersonalBadges;
+    private List<Long> unlockedPatrolBadges;
     private static final String TAG = "badgesactivity";
 
     @Override
@@ -41,8 +47,10 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
         showProgressDialog();
 
 
-        allBadge = new ArrayList<>();
-        unlockedBadges = new ArrayList<>();
+        allpersonalBadge = new ArrayList<>();
+        unlockedPersonalBadges = new ArrayList<>();
+        allPatrolBadges = new ArrayList<>();
+        unlockedPatrolBadges = new ArrayList<>();
 
         readData();
     }
@@ -55,7 +63,15 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                            allBadge.add(doc.toObject(Badge.class));
+                            Badge badge = doc.toObject(Badge.class);
+                            switch (badge.getLevel()) {
+                                case 1:
+                                    allpersonalBadge.add(badge);
+                                    break;
+                                case 2:
+                                    allPatrolBadges.add(badge);
+                                    break;
+                            }
                         }
 
                         db.collection("users").document(appUser.getUserID())
@@ -63,8 +79,16 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
                                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                        unlockedBadges = (List<Long>) documentSnapshot.get("achievedBadges");
-                                        initRecyclerView();
+                                        unlockedPersonalBadges = (List<Long>) documentSnapshot.get("achievedBadges");
+                                        db.collection("patrols").document(appUser.getPatrol())
+                                                .get()
+                                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                        unlockedPatrolBadges = (List<Long>) documentSnapshot.get("achievedBadges");
+                                                        initRecyclerView();
+                                                    }
+                                                });
                                         //hideProgressDialog();
                                     }
                                 });
@@ -75,19 +99,26 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
 
     private void initRecyclerView() {
 
-        badgesCardAdapter = new BadgesCardAdapter(allBadge, unlockedBadges, BadgesActivity.this, BadgesActivity.this, this);
+        personalBadgesCardAdapter = new BadgesCardAdapter(allpersonalBadge, unlockedPersonalBadges, BadgesActivity.this, BadgesActivity.this, this);
+        patrolBadgesCardAdapter = new BadgesCardAdapter(allPatrolBadges, unlockedPatrolBadges, BadgesActivity.this, BadgesActivity.this, this);
         Log.d(TAG, "initrecyclerview");
-        layoutManager = new LinearLayoutManager(BadgesActivity.this, LinearLayoutManager.VERTICAL, false);
+        personallayoutManager = new LinearLayoutManager(BadgesActivity.this, LinearLayoutManager.VERTICAL, false);
+        patrollayoutManager = new LinearLayoutManager(BadgesActivity.this, LinearLayoutManager.VERTICAL, false);
 
-        recyclerView = findViewById(R.id.badge_list_View);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(badgesCardAdapter);
-        recyclerView.getViewTreeObserver()
+        personalRecyclerView = findViewById(R.id.personal_badge_list_View);
+        personalRecyclerView.setLayoutManager(personallayoutManager);
+        personalRecyclerView.setAdapter(personalBadgesCardAdapter);
+
+        patrolRecyclerView = findViewById(R.id.patrol_badge_list_View);
+        patrolRecyclerView.setLayoutManager(patrollayoutManager);
+        patrolRecyclerView.setAdapter(patrolBadgesCardAdapter);
+
+        personalRecyclerView.getViewTreeObserver()
                 .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
                         hideProgressDialog();
-                        recyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        personalRecyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     }
                 });
     }
@@ -101,7 +132,7 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
 
         boolean unlocked = false;
 
-        if(unlockedBadges.contains((long) badge.getBadgeID()))
+        if (unlockedPersonalBadges.contains((long) badge.getBadgeID()) || unlockedPatrolBadges.contains((long) badge.getBadgeID()))
             unlocked = true;
 
         DialogFragment dialogFragment = BadgeDescriptionDialogFragment.newInstance(badge, unlocked);

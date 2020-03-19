@@ -142,4 +142,5 @@
     <string name="submitted_tasks">Beküldött feladatok</string>
     <string name="imagefortasksolution">ImageForTaskSolution</string>
     <string name="title_home_nav">Általános</string>
+    <string name="ADMOB_APP_ID">ca-app-pub-4133828845327420~5582012208</string>
 </resources>

@@ -78,6 +78,7 @@ public class BadgeDescriptionDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SendTaskActivity.class);
                 intent.putExtra("badgeID", badge.getBadgeID());
+                intent.putExtra("badgeLevel", badge.getLevel());
                 startActivity(intent);
             }
         });
