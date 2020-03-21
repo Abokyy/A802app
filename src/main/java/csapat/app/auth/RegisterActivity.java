@@ -135,9 +135,6 @@ public class RegisterActivity extends BaseCompat {
 
         showProgressDialog();
 
-
-
-
         mAuth.createUserWithEmailAndPassword(etEmail.getText().toString(), etPassword.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -156,12 +153,6 @@ public class RegisterActivity extends BaseCompat {
                                     }
                                 }
                             });
-                            //Toast.makeText(RegisterActivity.this, "Authentication succesful.",
-                                    //Toast.LENGTH_SHORT).show();
-                            //createUserInDB();
-                            /*Intent registeredIntent = new Intent(RegisterActivity.this, NavMainActivity.class);
-                            startActivity(registeredIntent);
-                            finish();*/
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -215,15 +206,6 @@ public class RegisterActivity extends BaseCompat {
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
-
-        //DocumentReference documentReference = db.collection("patrols").document(patrol);
-
-        //documentReference.update("members", FieldValue.arrayUnion(fullName));
-
-
-        //AppUser registeredUser = new AppUser(un, fn, fullName, ln, email, patrol, 1, "");
-        //SaveSharedPreference.setAppUser(RegisterActivity.this, registeredUser, referenceID[0]);
-
     }
 
 

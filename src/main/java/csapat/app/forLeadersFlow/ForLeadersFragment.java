@@ -46,7 +46,7 @@ public class ForLeadersFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_for_leaders, container, false);
 
-        rewardedAd = new RewardedAd(Objects.requireNonNull(getActivity()), "ca-app-pub-3940256099942544/5224354917"); //TODO replace with real rewardAd id
+        rewardedAd = new RewardedAd(Objects.requireNonNull(getActivity()), "ca-app-pub-4133828845327420/7420873330"); //TODO replace with real rewardAd id
 
 
         RewardedAdLoadCallback adLoadCallback = new RewardedAdLoadCallback() {

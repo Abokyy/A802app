@@ -25,10 +25,6 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         final PendingResult pendingResult = goAsync();
         Task asyncTask = new Task(pendingResult, intent, context);
         asyncTask.execute();
-
-
-
-
     }
 
     private static class Task extends AsyncTask<String, Integer, String> {

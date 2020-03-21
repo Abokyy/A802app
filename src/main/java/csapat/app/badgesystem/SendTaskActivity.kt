@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_send_task.*
 
 class SendTaskActivity : BaseCompat() {
 
-    private var image : Uri? = null
+    private var image: Uri? = null
 
     @SuppressLint("ShowToast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,20 +23,18 @@ class SendTaskActivity : BaseCompat() {
         setContentView(R.layout.activity_send_task)
 
         choose_image_for_task_solution.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
-                        PackageManager.PERMISSION_DENIED){
+                        PackageManager.PERMISSION_DENIED) {
                     //permission denied
                     val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
                     //show popup to request runtime permission
                     requestPermissions(permissions, PERMISSION_CODE);
-                }
-                else{
+                } else {
                     //permission already granted
                     pickImageFromGallery();
                 }
-            }
-            else{
+            } else {
                 //system OS is < Marshmallow
                 pickImageFromGallery();
             }
@@ -58,8 +56,7 @@ class SendTaskActivity : BaseCompat() {
                             hideProgressDialog()
                             Toast.makeText(applicationContext, "Elküldve!", Toast.LENGTH_LONG).show()
                         }
-                    }
-                    else {
+                    } else {
                         val taskSolution = TaskSolution(taskSolutionET.text.toString(),
                                 appUser.userID, intent.getIntExtra("badgeID", 0))
 
@@ -82,8 +79,7 @@ class SendTaskActivity : BaseCompat() {
                             hideProgressDialog()
                             Toast.makeText(applicationContext, "Elküldve!", Toast.LENGTH_LONG).show()
                         }
-                    }
-                    else {
+                    } else {
                         val taskSolution = TaskSolution(taskSolutionET.text.toString(),
                                 appUser.patrol, intent.getIntExtra("badgeID", 0))
 
@@ -93,12 +89,7 @@ class SendTaskActivity : BaseCompat() {
                     finish()
                 }
             }
-
-
-            //image?.let { it1 -> storageReference.child("task_solutions/${appUser.fullName}_${appUser.patrol}").putFile(it1) }
         }
-
-
     }
 
 
@@ -117,14 +108,13 @@ class SendTaskActivity : BaseCompat() {
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        when(requestCode){
+        when (requestCode) {
             PERMISSION_CODE -> {
-                if (grantResults.size >0 && grantResults[0] ==
-                        PackageManager.PERMISSION_GRANTED){
+                if (grantResults.size > 0 && grantResults[0] ==
+                        PackageManager.PERMISSION_GRANTED) {
                     //permission from popup granted
                     pickImageFromGallery()
-                }
-                else{
+                } else {
                     //permission from popup denied
                     Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
                 }
@@ -134,12 +124,11 @@ class SendTaskActivity : BaseCompat() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
             imageForTaskSolution.setImageURI(data?.data)
             image = data?.data
         }
     }
-
 
 
 }

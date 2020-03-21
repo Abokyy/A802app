@@ -1,18 +1,25 @@
 package csapat.app.badgesystem;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -69,6 +76,18 @@ public class BadgeAdapter extends RecyclerView.Adapter<BadgeAdapter.BadgeViewHol
                 // Got the download URL for 'users/me/profile.png'
                 Glide.with(context)
                         .load(uri)
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                holder.progressBar.setVisibility(View.GONE);
+                                return false;
+                            }
+                        })
                         .into(holder.badgeImage);
 
             }
@@ -95,12 +114,14 @@ public class BadgeAdapter extends RecyclerView.Adapter<BadgeAdapter.BadgeViewHol
         ImageView badgeImage;
         TextView badgeName;
         Badge badge;
+        ProgressBar progressBar;
 
         public BadgeViewHolder(@NonNull final View itemView) {
             super(itemView);
 
             badgeImage = itemView.findViewById(R.id.badgeImage);
             badgeName = itemView.findViewById(R.id.badgeName);
+            progressBar = itemView.findViewById(R.id.badgeItemProgressBar);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

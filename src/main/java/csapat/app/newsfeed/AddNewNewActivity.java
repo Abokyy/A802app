@@ -85,8 +85,6 @@ public class AddNewNewActivity extends BaseCompat {
 
                 Toast toast = Toast.makeText(getApplicationContext(), "Hír közzétéve", Toast.LENGTH_LONG);
                 toast.show();
-                //Intent eventListIntent = new Intent(AddNewNewActivity.this, NewsFeedActivity.class);
-                //startActivity(eventListIntent);
                 finish();
             }
         });

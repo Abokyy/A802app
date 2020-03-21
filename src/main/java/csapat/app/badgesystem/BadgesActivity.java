@@ -117,7 +117,7 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
                 .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
-                        hideProgressDialog();
+                        //hideProgressDialog();
                         personalRecyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     }
                 });

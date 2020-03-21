@@ -33,7 +33,6 @@ public class TeamStructureFragment extends Fragment implements StructureItemAdap
     private static final String TAG = "TeamStructureAct";
     private RecyclerView recyclerView;
     private StructureItemAdapter structureItemAdapter;
-    //private FirebaseFirestore db;
     private List<String> troops;
     private FirebaseFirestore db;
     private BaseCompat baseCompat;
@@ -42,7 +41,6 @@ public class TeamStructureFragment extends Fragment implements StructureItemAdap
                              ViewGroup container, Bundle savedInstanceState) {
 
         db = FirebaseFirestore.getInstance();
-        //baseCompat = new BaseCompat();
 
         View root = inflater.inflate(R.layout.fragment_team_structure, container, false);
 
@@ -68,7 +66,6 @@ public class TeamStructureFragment extends Fragment implements StructureItemAdap
                             Log.d(TAG, "Cached get failed: ", task.getException());
                         }
                         initRecyclerView(view);
-                        //baseCompat.hideProgressDialog();
                     }
                 });
     }
@@ -77,8 +74,6 @@ public class TeamStructureFragment extends Fragment implements StructureItemAdap
         recyclerView = view.findViewById(R.id.structureView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         structureItemAdapter = new StructureItemAdapter(this);
-
-
 
         Collections.sort(troops);
 

@@ -31,12 +31,6 @@ public class TeamDetailActivity extends BaseCompat {
 
         teamname = getIntent().getStringExtra(EXTRA_TEAM_NAME);
         readData();
-
-
-
-
-
-
     }
 
     private void initView() {

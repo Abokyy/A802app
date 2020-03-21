@@ -1,16 +1,23 @@
 package csapat.app.newsfeed;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,7 +43,7 @@ public class NewDetailActivity extends BaseCompat {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_detail);
-        //showProgressDialog();
+        showProgressDialog();
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -64,7 +71,7 @@ public class NewDetailActivity extends BaseCompat {
 
 
 
-        showProgressDialog();
+        //showProgressDialog();
         db.collection("news")
                 .whereEqualTo("title", newsTitle)
                 .get()
@@ -103,9 +110,20 @@ public class NewDetailActivity extends BaseCompat {
                 // Got the download URL for 'users/me/profile.png'
                 Glide.with(context)
                         .load(uri)
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                hideProgressDialog();
+                                return false;
+                            }
+                        })
                         .into(imageView);
 
-                hideProgressDialog();
 
             }
         }).addOnFailureListener(new OnFailureListener() {

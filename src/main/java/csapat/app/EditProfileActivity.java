@@ -1,16 +1,19 @@
 package csapat.app;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +21,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,6 +45,8 @@ public class EditProfileActivity extends BaseCompat {
     private Uri filePath;
     private String imagePath;
     private ImageView imageView;
+    private ProgressBar progressBar;
+    private boolean choosedNewImage = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +56,7 @@ public class EditProfileActivity extends BaseCompat {
         Button changeProfilePic = findViewById(R.id.change_profile_pic_btn);
 
         imageView = findViewById(R.id.edit_new_profile_picture);
+        progressBar = findViewById(R.id.editCurrentUserProgressBar);
 
         initTextViews();
 
@@ -114,6 +124,42 @@ public class EditProfileActivity extends BaseCompat {
                 throw new IllegalStateException("Unexpected value: " + userRank);
         }
 
+        if (!BaseCompat.appUser.getProfile_picture().equals("default") && !choosedNewImage) {
+
+            BaseCompat.storageReference.child(BaseCompat.appUser.getProfile_picture()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
+                    Glide.with(EditProfileActivity.this)
+                            .load(uri)
+                            .listener(new RequestListener<Drawable>() {
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                    progressBar.setVisibility(View.GONE);
+                                    return false;
+                                }
+                            })
+                            .into(imageView);
+
+                    //hideProgressDialog();
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        } else {
+            progressBar.setVisibility(View.GONE);
+            imageView.setImageResource(R.drawable.profilepictureicon);
+        }
+
     }
 
     private void chooseImage() {
@@ -130,33 +176,13 @@ public class EditProfileActivity extends BaseCompat {
                 && data != null && data.getData() != null) {
             filePath = data.getData();
             try {
+                choosedNewImage = true;
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 imageView.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-        /*if (appUser.getProfile_picture() != null) {
-
-            BaseCompat.storageReference.child(appUser.getProfile_picture()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    // Got the download URL for 'users/me/profile.png'
-                    Glide.with(EditProfileActivity.this)
-                            .load(uri)
-                            .into(imageView);
-
-                    //hideProgressDialog();
-
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle any errors
-                }
-            });
-        }*/
     }
 
     private void uploadImage() {

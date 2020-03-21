@@ -64,7 +64,7 @@ public class EventsFragment extends Fragment implements MonthCardAdapter.OnMonth
         swipeContainer = root.findViewById(R.id.swipeContainer);
         db = FirebaseFirestore.getInstance();
 
-        if(SaveSharedPreference.getAppUser(getActivity()).getRank() == 1 || SaveSharedPreference.getAppUser(getActivity()).getUsername().equals("802guest")) {
+        if (SaveSharedPreference.getAppUser(getActivity()).getRank() == 1 || SaveSharedPreference.getAppUser(getActivity()).getUsername().equals("802guest")) {
             CoordinatorLayout.LayoutParams p = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
             p.setBehavior(null); //should disable default animations
             p.setAnchorId(View.NO_ID); //should let you set visibility
@@ -77,7 +77,6 @@ public class EventsFragment extends Fragment implements MonthCardAdapter.OnMonth
             public void onClick(View v) {
                 Intent addNewActivityIntent = new Intent(getActivity(), AddNewEventActivity.class);
                 startActivity(addNewActivityIntent);
-                //getActivity().finish();
             }
         });
 
@@ -88,7 +87,6 @@ public class EventsFragment extends Fragment implements MonthCardAdapter.OnMonth
             @Override
             public void onClick(View v) {
                 adapter.update(allEvents);
-                //showNotification();
                 showPrevEventsBtn.setVisibility(View.GONE);
             }
         });
@@ -100,7 +98,6 @@ public class EventsFragment extends Fragment implements MonthCardAdapter.OnMonth
 
 
         readData(root);
-        //initRecyclerView(root);
         return root;
     }
 
@@ -121,36 +118,12 @@ public class EventsFragment extends Fragment implements MonthCardAdapter.OnMonth
                         for (QueryDocumentSnapshot doc : value) {
                             if (doc.get("startday") != null) {
                                 allEvents.add(doc.toObject(Event.class));
-                                //allEvents.add(doc.toObject(Event.class));
-                                //adapter.addMonthCardItem(doc.toObject(Event.class));
                             }
                         }
-                        //Log.d(TAG, "Current cites in CA: " + cities);
                         initRecyclerView(view);
 
                     }
                 });
-
-        //showProgressDialog();
-        /*db.collection("allEvents")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @RequiresApi(api = Build.VERSION_CODES.N)
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (DocumentSnapshot document : task.getResult()) {
-                                Event ev = document.toObject(Event.class);
-                                allEvents.add(ev);
-                            }
-                        } else {
-                            //Log.d(TAG, "Cached get failed: ", task.getException());
-                        }
-
-                        initRecyclerView(view);
-                        //hideProgressDialog();
-                    }
-                });*/
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -160,27 +133,21 @@ public class EventsFragment extends Fragment implements MonthCardAdapter.OnMonth
 
         Calendar c = Calendar.getInstance();
         List<Event> upcomingEvents = new ArrayList<>();
-        Event today = new Event (c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+        Event today = new Event(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 
-        for (Event e: allEvents) {
-            if(e.compareTo(today) > 0) {
+        for (Event e : allEvents) {
+            if (e.compareTo(today) > 0) {
                 upcomingEvents.add(e);
             }
         }
 
         adapter = new MonthCardAdapter(allEvents, getActivity());
         adapter.update(upcomingEvents);
-        layoutManager = new LinearLayoutManager(getActivity() , LinearLayoutManager.VERTICAL, false);
+        layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
 
         recyclerView = view.findViewById(R.id.event_list_View);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
-
-
-
-
-
     }
 
     @Override
@@ -189,12 +156,11 @@ public class EventsFragment extends Fragment implements MonthCardAdapter.OnMonth
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void run() {
-                adapter.update(allEvents);
+                //adapter.update(allEvents);
                 swipeContainer.setRefreshing(false);
             }
         }, 2000);
     }
-
 
     private void showNotification() {
         Notification notification = new NotificationCompat.Builder(getActivity(), NavMainActivity.CHANNEL_ID)
@@ -208,12 +174,6 @@ public class EventsFragment extends Fragment implements MonthCardAdapter.OnMonth
 // notificationId is a unique int for each notification that you must define
         notificationManager.notify(1, notification);
     }
-
-
-
-
-
-
 
     @Override
     public void onViewItemSelected(String item) {

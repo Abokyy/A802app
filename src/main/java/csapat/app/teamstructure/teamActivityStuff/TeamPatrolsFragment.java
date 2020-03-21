@@ -73,8 +73,6 @@ public class TeamPatrolsFragment extends Fragment implements StructureItemAdapte
     }
 
 
-
-
     @Override
     public void onViewItemSelected(String item) {
         Intent showNextLevel = new Intent();

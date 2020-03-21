@@ -1,15 +1,22 @@
 package csapat.app.teamstructure;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,6 +35,7 @@ public class UserProfileActivity extends BaseCompat {
     private String usernameOfProfile;
     //private FirebaseFirestore db;
     private AppUser user;
+    private ProgressBar progressBar;
 
 
 
@@ -35,16 +43,9 @@ public class UserProfileActivity extends BaseCompat {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-
-
-        //db = FirebaseFirestore.getInstance();
-
         usernameOfProfile = getIntent().getStringExtra(EXTRA_USER_NAME_TO_CHECK);
 
-
         readData();
-
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -57,13 +58,12 @@ public class UserProfileActivity extends BaseCompat {
         TextView troopLeaderAt = findViewById(R.id.profile_troop_leader_at);
         View patrolLeaderAtLayout = findViewById(R.id.profile_patrol_leader_at_layout);
         View troopLeaderAtLayout = findViewById(R.id.profile_troop_leader_at_layout);
+        progressBar = findViewById(R.id.UserProfileProgressBar);
         final ImageView imageView = findViewById(R.id.profile_picture);
 
         profileFullname.setText(user.getFullName());
 
         int userRank = user.getRank();
-
-
 
         memberAtPatrol.setText("Tagja a " + user.getPatrol() + " őrsnek.");
         switch (userRank) {
@@ -106,6 +106,18 @@ public class UserProfileActivity extends BaseCompat {
                     // Got the download URL for 'users/me/profile.png'
                     Glide.with(UserProfileActivity.this)
                             .load(uri)
+                            .listener(new RequestListener<Drawable>() {
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                    progressBar.setVisibility(View.GONE);
+                                    return false;
+                                }
+                            })
                             .into(imageView);
 
                     //hideProgressDialog();
@@ -117,6 +129,9 @@ public class UserProfileActivity extends BaseCompat {
                     // Handle any errors
                 }
             });
+        } else {
+            progressBar.setVisibility(View.GONE);
+            imageView.setImageResource(R.drawable.profilepictureicon);
         }
 
     }

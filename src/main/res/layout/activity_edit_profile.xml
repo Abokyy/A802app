@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
     <LinearLayout
@@ -14,51 +14,65 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="320dp">
+
             <LinearLayout
-                android:background="@color/cardview_shadow_start_color"
                 android:layout_width="match_parent"
                 android:layout_height="320dp"
+                android:background="@color/cardview_shadow_start_color"
                 android:orientation="vertical">
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/profile_saving_floating_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="end"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:backgroundTint="@color/colorSecondaryDark"
                     app:layout_anchor="@id/profile_top_relative_layout"
-                    android:layout_gravity="end"
-                    app:srcCompat="@drawable/saveicon">
-                </com.google.android.material.floatingactionbutton.FloatingActionButton>
+                    app:srcCompat="@drawable/saveicon" />
 
 
-                <ImageView
-                    android:id="@+id/edit_new_profile_picture"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:src="@drawable/profilepictureicon"/>
-                <TextView
-                    android:layout_marginTop="10dp"
-                    android:layout_gravity="center_horizontal"
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+
+                    <ProgressBar
+                        android:id="@+id/editCurrentUserProgressBar"
+                        style="?android:attr/progressBarStyleSmall"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_centerInParent="true"
+                        android:visibility="visible" />
+
+                    <ImageView
+                        android:id="@+id/edit_new_profile_picture"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center_horizontal" />
+                </RelativeLayout>
+
+                <TextView
                     android:id="@+id/edit_profile_FullName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
                     android:textColor="#fff"
-                    android:textStyle="bold"
-                    android:textSize="21sp"/>
+                    android:textSize="21sp"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/change_profile_pic_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="@string/change_profile_picture"
+                    android:background="@color/colorSecondaryDark"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
-                    android:background="@color/colorSecondaryDark"
-                    />
+                    android:text="@string/change_profile_picture" />
             </LinearLayout>
             <!--<androidx.cardview.widget.CardView
                 android:layout_width="400dp"
@@ -144,26 +158,29 @@
         <LinearLayout
             android:layout_width="360dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_gravity="center"
-            android:layout_marginTop="45dp">
+            android:layout_marginTop="45dp"
+            android:orientation="vertical">
+
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingStart="25dp"
-                android:paddingEnd="25dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:paddingEnd="25dp">
+
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:src="@drawable/teamwork"/>
+                    android:src="@drawable/teamwork" />
+
                 <TextView
-                    android:textStyle="bold"
-                    android:layout_gravity="center_vertical"
+                    android:id="@+id/edit_profile_patrol_member_at"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:paddingLeft="20dp"
-                    android:id="@+id/edit_profile_patrol_member_at"/>
+                    android:textStyle="bold" />
             </LinearLayout>
             <!--<LinearLayout
                 android:layout_marginTop="25dp"
@@ -186,45 +203,50 @@
             </LinearLayout>-->
             <LinearLayout
                 android:id="@+id/edit_profile_patrol_leader_at_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:orientation="horizontal"
                 android:paddingStart="25dp"
-                android:paddingEnd="25dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:paddingEnd="25dp">
+
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:src="@drawable/leadericon"/>
-                <TextView
-                    android:textStyle="bold"
+                    android:src="@drawable/leadericon" />
 
-                    android:layout_gravity="center_vertical"
+                <TextView
+                    android:id="@+id/edit_profile_patrol_leader_at"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:paddingLeft="20dp"
-                    android:id="@+id/edit_profile_patrol_leader_at" />
+                    android:textStyle="bold" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/edit_profile_troop_leader_at_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:orientation="horizontal"
                 android:paddingStart="25dp"
-                android:paddingEnd="25dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:paddingEnd="25dp">
+
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:src="@drawable/troop_leader"/>
-                <TextView
-                    android:textStyle="bold"
+                    android:src="@drawable/troop_leader" />
 
-                    android:layout_gravity="center_vertical"
+                <TextView
+                    android:id="@+id/edit_profile_troop_leader_at"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:paddingLeft="20dp"
-                    android:id="@+id/edit_profile_troop_leader_at"/>
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>

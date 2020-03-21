@@ -48,10 +48,7 @@ public class PatrolDetailActivity extends BaseCompat  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_structure);
 
-
-
         patrolName = getIntent().getStringExtra(EXTRA_PATROL_NAME);
-
 
         readData();
 
@@ -73,8 +70,6 @@ public class PatrolDetailActivity extends BaseCompat  {
 
 
     private void readData() {
-
-
         DocumentReference documentReference = db.collection("patrols").document(patrolName);
 
         documentReference
@@ -84,8 +79,6 @@ public class PatrolDetailActivity extends BaseCompat  {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 patrol = documentSnapshot.toObject(Patrol.class);
                 initView();
-
-
             }
         });
     }

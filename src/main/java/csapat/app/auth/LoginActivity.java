@@ -107,7 +107,6 @@ public class LoginActivity extends BaseCompat {
     }
 
     public void signInUserWithEmailAndPassword(String email, String password) {
-        //Log.d(TAG, "signIn:" + email);
         if (!validateForm()) {
             return;
         }
@@ -140,11 +139,8 @@ public class LoginActivity extends BaseCompat {
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             hideProgressDialog();
-                            //updateUI(null);
                         }
 
-
-                        // ...
                     }
                 });
 
@@ -167,12 +163,6 @@ public class LoginActivity extends BaseCompat {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 appUser = document.toObject(AppUser.class);
                                 SaveSharedPreference.setAppUser(LoginActivity.this, appUser, document.getId());
-                                /*username = appUser.getUsername();
-                                userFirstName = appUser.getFirstName();
-                                userFullName = appUser.getFullName();
-                                userLastName = appUser.getLastName();
-                                userRank = appUser.getRank();
-                                userPatrol = appUser.getPatrol();*/
                             }
                         } else {
                             //TODO handle unsuccessful query

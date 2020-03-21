@@ -65,15 +65,7 @@ public class MonthCardAdapter extends RecyclerView.Adapter<MonthCardAdapter.Mont
         eventCardAdapter = new EventCardAdapter(eventsInMonthInYear, context);
         holder.recyclerView.setAdapter(eventCardAdapter);
         holder.recyclerView.setRecycledViewPool(viewPool);
-        //LinearLayoutManager childLayoutManager = new LinearLayoutManager(holder.recyclerView.getContext(), RecyclerView.VERTICAL, false);
-        //holder.recyclerView.findViewById(R.id.monthRecycler);
-        //holder.recyclerView.setRecycledViewPool(viewPool);
     }
-
-    private void initRecyclerView() {
-
-    }
-
 
     @Override
     public int getItemCount() {
@@ -221,10 +213,6 @@ public class MonthCardAdapter extends RecyclerView.Adapter<MonthCardAdapter.Mont
     private List<String> transformIntsToUniqueMonths(List<Integer> monthInts) {
 
         List<String> monthsToDisplay = new ArrayList<>();
-
-        //Collections.sort(monthInts);
-        //monthInts = monthInts.stream().distinct().collect(Collectors.<Integer>toList());
-
 
         for (Integer i : monthInts) {
             switch (i) {

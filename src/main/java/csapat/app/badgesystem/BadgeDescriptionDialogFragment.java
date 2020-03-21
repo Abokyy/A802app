@@ -104,8 +104,6 @@ public class BadgeDescriptionDialogFragment extends DialogFragment {
             }
         });
 
-
-
         return v;
     }
 

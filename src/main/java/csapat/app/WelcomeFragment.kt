@@ -35,6 +35,7 @@ class WelcomeFragment : Fragment() {
             val view = activity!!.findViewById<FrameLayout>(R.id.welcomeFragcontainer).id
             val transaction = activity!!.supportFragmentManager.beginTransaction()
             transaction.replace(view , TeamStructureFragment())
+            transaction.addToBackStack(null)
             transaction.commit()
         }
 
