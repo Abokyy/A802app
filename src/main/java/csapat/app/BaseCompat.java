@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -40,6 +41,8 @@ public class BaseCompat extends AppCompatActivity {
     protected static FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 
     public static StorageReference storageReference = firebaseStorage.getReference();
+
+    public static FirebaseCrashlytics firebaseCrashlytics = FirebaseCrashlytics.getInstance();
 
     protected String FBuid = firebaseUser != null ? firebaseUser.getUid(): null;
 

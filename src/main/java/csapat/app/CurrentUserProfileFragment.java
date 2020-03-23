@@ -126,13 +126,13 @@ public class CurrentUserProfileFragment extends Fragment {
                 break;
 
             case 3:
-                patrolLeaderAt.setVisibility(View.VISIBLE);
+                patrolLeaderAtLayout.setVisibility(View.VISIBLE);
                 patrolLeaderAt.setText("Vezetője vagy a " + user.getPatrolLeaderAt() + " őrsnek.");
                 //rank.setText(R.string.patrolLeader);
                 break;
 
             case 4:
-                patrolLeaderAt.setVisibility(View.VISIBLE);
+                patrolLeaderAtLayout.setVisibility(View.VISIBLE);
                 troopLeaderAtLayout.setVisibility(View.VISIBLE);
                 patrolLeaderAt.setText("Vezetője vagy a " + user.getPatrolLeaderAt() + " őrsnek.");
                 troopLeaderAt.setText("Parancsnoka vagy a " + user.getTroopLeaderAt() + " rajnak.");

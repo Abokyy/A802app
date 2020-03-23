@@ -205,7 +205,7 @@
                 android:id="@+id/profile_troop_leader_at_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginVertical="25dp"
                 android:orientation="horizontal"
                 android:paddingLeft="25dp">
 

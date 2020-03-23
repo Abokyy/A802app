@@ -189,6 +189,7 @@ public class EditProfileActivity extends BaseCompat {
 
         if (filePath != null) {
             showProgressDialog(EditProfileActivity.this);
+            storageReference.child(appUser.getProfile_picture()).delete();
             String rndUUID = "profile_pictures/" + UUID.randomUUID().toString();
             imagePath = rndUUID;
             StorageReference ref = storageReference.child(rndUUID);

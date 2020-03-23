@@ -12,8 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:textSize="30sp"
-        android:id="@+id/new_description">
+        android:textSize="20sp"
+        android:justificationMode="inter_word"
+        android:id="@+id/new_description"
+        tools:ignore="UnusedAttribute">
     </TextView>
 
 </androidx.core.widget.NestedScrollView>

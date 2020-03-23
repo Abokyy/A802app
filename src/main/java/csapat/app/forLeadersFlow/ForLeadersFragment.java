@@ -19,6 +19,7 @@ import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdCallback;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import java.util.Objects;
 
@@ -69,6 +70,7 @@ public class ForLeadersFragment extends Fragment {
         Button projectorBtn = root.findViewById(R.id.projectorBtn);
         Button homeOrder = root.findViewById(R.id.home_orderBtn);
         final Button submittedTasks = root.findViewById(R.id.allSubmittedTaskBtn);
+        Button showAd = root.findViewById(R.id.adButton);
 
         submittedTasks.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +84,13 @@ public class ForLeadersFragment extends Fragment {
         homeOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(getActivity(), "Hamarosan", Toast.LENGTH_LONG).show();
+                FirebaseCrashlytics.getInstance().log("Test crash log");
+            }
+        });
+
+        showAd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 if (rewardedAd.isLoaded()) {
                     RewardedAdCallback adCallback = new RewardedAdCallback() {
                         @Override
