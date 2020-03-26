@@ -53,4 +53,5 @@
     <string name="ADMOB_APP_ID">ca-app-pub-4133828845327420~5582012208</string>
     <string name="support_ad">Támogató reklám (béta)</string>
     <string name="yes">Igen</string>
+    <string name="there_is_nothing_here">Nincs itt semmi :(</string>
 </resources>

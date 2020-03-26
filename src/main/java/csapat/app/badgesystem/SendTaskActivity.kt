@@ -42,6 +42,11 @@ class SendTaskActivity : BaseCompat() {
 
         submitTaskSolutionBtn.setOnClickListener {
 
+            if(image == null) {
+                Toast.makeText(this, "Csatolj a megoldásodhoz képet!", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             when (intent.getIntExtra("badgeLevel", 0)) {
                 1 -> {
                     if (image != null) {
@@ -55,15 +60,20 @@ class SendTaskActivity : BaseCompat() {
                         uploadTask.addOnSuccessListener {
                             hideProgressDialog()
                             Toast.makeText(applicationContext, "Elküldve!", Toast.LENGTH_LONG).show()
+                            finish()
                         }
                     } else {
                         val taskSolution = TaskSolution(taskSolutionET.text.toString(),
                                 appUser.userID, intent.getIntExtra("badgeID", 0))
 
-                        db.collection("taskSolutions").document("${taskSolution.taskSubmitterUserID} For Badge ${taskSolution.badgeID}").set(taskSolution)
+                        db.collection("taskSolutions")
+                                .document("${taskSolution.taskSubmitterUserID} For Badge ${taskSolution.badgeID}")
+                                .set(taskSolution)
+                                .addOnSuccessListener {
+                                    finish()
+                                }
 
                     }
-                    finish()
                 }
 
                 2 -> {
@@ -78,15 +88,21 @@ class SendTaskActivity : BaseCompat() {
                         uploadTask.addOnSuccessListener {
                             hideProgressDialog()
                             Toast.makeText(applicationContext, "Elküldve!", Toast.LENGTH_LONG).show()
+                            finish()
                         }
                     } else {
                         val taskSolution = TaskSolution(taskSolutionET.text.toString(),
                                 appUser.patrol, intent.getIntExtra("badgeID", 0))
 
-                        db.collection("taskSolutions").document("${appUser.patrol} For Badge ${taskSolution.badgeID}").set(taskSolution)
+                        db.collection("taskSolutions")
+                                .document("${appUser.patrol} For Badge ${taskSolution.badgeID}")
+                                .set(taskSolution)
+                                .addOnCompleteListener {
+                                    finish()
+
+                                }
 
                     }
-                    finish()
                 }
             }
         }

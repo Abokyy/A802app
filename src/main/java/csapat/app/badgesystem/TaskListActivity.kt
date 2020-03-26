@@ -68,6 +68,7 @@ class TaskListActivity : BaseCompat(), TaskItemAdapter.taskItemClickListener {
     private fun initrecyclerview(mode: Int) {
         taskRecyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = TaskItemAdapter(taskList, taskIDList, this)
+        if(taskList.size < 1) noTaskInTheListTV.visibility = View.VISIBLE
         adapter.itemClickListener = this
         taskRecyclerView.adapter = adapter
 

@@ -63,6 +63,8 @@ class TaskSolutionDetails : BaseCompat() {
                         .into(imageView)
                 hideProgressDialog()
             }
+        } else {
+            hideProgressDialog()
         }
 
         refuseTask.setOnClickListener {
