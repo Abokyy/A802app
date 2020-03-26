@@ -137,19 +137,19 @@
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="45dp"
+            android:layout_margin="45dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingLeft="25dp">
+                android:paddingStart="25dp">
 
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:src="@drawable/hierarchy" />
+                    android:src="@drawable/teamwork" />
 
                 <TextView
                     android:id="@+id/profile_patrol_member_at"
@@ -184,12 +184,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:orientation="horizontal"
-                android:paddingLeft="25dp">
+                android:paddingStart="25dp">
 
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:src="@drawable/newsfeed" />
+                    android:src="@drawable/leadericon" />
 
                 <TextView
                     android:id="@+id/profile_patrol_leader_at"
@@ -207,12 +207,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="25dp"
                 android:orientation="horizontal"
-                android:paddingLeft="25dp">
+                android:paddingStart="25dp">
 
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:src="@drawable/newsfeed" />
+                    android:src="@drawable/troop_leader" />
 
                 <TextView
                     android:id="@+id/profile_troop_leader_at"

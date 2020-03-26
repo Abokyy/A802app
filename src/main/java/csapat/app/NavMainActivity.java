@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 
@@ -43,6 +44,7 @@ public class NavMainActivity extends BaseCompat {
     public static final String CHANNEL_ID = "notificationCH";
     private final static String default_notification_channel_id = "default";
     public final static String ACTION_YES = "yes";
+    public final static String ACTION_NO = "no";
     public static final String GUEST_LOGIN = "none";
 
     @Override
@@ -89,7 +91,7 @@ public class NavMainActivity extends BaseCompat {
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 Patrol patrol;
                                 patrol = documentSnapshot.toObject(Patrol.class);
-                                //scheduleNotification(patrol);
+                                scheduleNotification(patrol);
 
                             }
                         });
@@ -104,7 +106,6 @@ public class NavMainActivity extends BaseCompat {
 
             } catch (Exception e) {
 
-                Log.d("Exception", "cathced");
             }
 
             try {
@@ -141,9 +142,6 @@ public class NavMainActivity extends BaseCompat {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(System.currentTimeMillis());
 
-        Log.d("Cal date", String.valueOf(cal.get(Calendar.DAY_OF_WEEK)));
-
-
         assert patrol != null;
 
         int dayToAskForMeeting = patrol.getMeetingDay();
@@ -157,11 +155,7 @@ public class NavMainActivity extends BaseCompat {
 
         cal.set(Calendar.HOUR_OF_DAY, patrol.getMeetingHour());
         cal.set(Calendar.MINUTE, patrol.getMeetingMinute());
-
-        Log.d("Cal date", String.valueOf(cal.get(Calendar.YEAR)));
-        Log.d("Cal date", String.valueOf(cal.get(Calendar.DAY_OF_WEEK)));
-        Log.d("Cal date", String.valueOf(cal.get(Calendar.HOUR_OF_DAY)));
-        Log.d("Cal date", String.valueOf(cal.get(Calendar.MINUTE)));
+        cal.set(Calendar.SECOND, 0);
 
 
         Intent intent = new Intent(this, GoingToPatrolMeetingActivity.class);
@@ -173,15 +167,20 @@ public class NavMainActivity extends BaseCompat {
         yesResponseIntent.putExtra("notID", 9);
         PendingIntent yesPendingIntent = PendingIntent.getBroadcast(this, 9, yesResponseIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
+        Intent noResponseIntent = new Intent(this, MyBroadcastReceiver.class);
+        noResponseIntent.setAction(ACTION_NO);
+        noResponseIntent.putExtra("notID", 10);
+        PendingIntent noPendingIntent = PendingIntent.getBroadcast(this, 10, noResponseIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, default_notification_channel_id);
-        builder.setContentTitle("Scheduled Notification");
-        builder.setContentText("boi");
-        builder.setSmallIcon(R.drawable.ic_launcher_foreground);
+        builder.setContentTitle("Őrsi jelenlét");
+        builder.setContentText("Mész a következő őrsire?");
+        builder.setSmallIcon(R.drawable.check_attendance);
         builder.setAutoCancel(true);
         builder.setContentIntent(pendIntent);
         builder.setChannelId(CHANNEL_ID);
-        builder.addAction(R.drawable.leadericon, getString(R.string.app_name), yesPendingIntent);
+        builder.addAction(R.drawable.leadericon, getString(R.string.yes), yesPendingIntent);
+        builder.addAction(R.drawable.leadericon, "Nem", noPendingIntent);
 
         Notification notification = builder.build();
 
@@ -191,7 +190,8 @@ public class NavMainActivity extends BaseCompat {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         assert alarmManager != null;
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        //alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP , SystemClock. elapsedRealtime () + 5000 , pendingIntent) ;
 
     }
 

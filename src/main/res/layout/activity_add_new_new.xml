@@ -8,6 +8,7 @@
     tools:context=".newsfeed.AddNewNewActivity">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
+    android:paddingVertical="20dp"
     android:layout_height="match_parent">
 
 
@@ -16,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="32dp"
         android:hint="Cím"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +37,7 @@
         android:hint="Leírás..."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_new_title"></EditText>
+        app:layout_constraintTop_toBottomOf="@+id/new_new_title" />
 
     <Button
         android:id="@+id/submit_new_new_btn"
@@ -44,11 +45,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/new_new_descreption"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="32dp"
+        android:layout_marginVertical="32dp"
         android:text="Közzététel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewForUpload"></Button>
+        app:layout_constraintTop_toBottomOf="@+id/imageViewForUpload" />
 
     <Button
         android:id="@+id/choose_image_button"
@@ -56,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/new_new_descreption"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="24dp"
+        android:layout_marginVertical="24dp"
         android:text="Kép választása"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -69,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/choose_image_button"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="32dp"
+        android:layout_marginVertical="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/choose_image_button"

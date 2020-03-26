@@ -34,7 +34,6 @@ public class BadgesCardAdapter extends RecyclerView.Adapter<BadgesCardAdapter.Ba
     @Override
     public BadgeCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_badge_card, parent, false);
-        Log.d(TAG, "oncreateviewholder");
         return new BadgeCardViewHolder(view);
     }
 
@@ -64,7 +63,6 @@ public class BadgesCardAdapter extends RecyclerView.Adapter<BadgesCardAdapter.Ba
     @Override
     public void onBadgeItemSelected(Badge badge) {
 
-        Log.d(TAG, "item selected");
 
         if(act != null)
             act.showBadgeDescrDialog(badge);
@@ -78,7 +76,6 @@ public class BadgesCardAdapter extends RecyclerView.Adapter<BadgesCardAdapter.Ba
         this.context = context;
         this.listener = listener;
         viewPool = new RecyclerView.RecycledViewPool();
-        Log.d(TAG, "BadgesCardAdapter constructor");
     }
 
     public class BadgeCardViewHolder extends RecyclerView.ViewHolder {

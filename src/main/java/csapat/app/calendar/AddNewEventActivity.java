@@ -147,7 +147,6 @@ public class AddNewEventActivity extends BaseCompat {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
                         hideProgressDialog();
                         finish();
                     }
@@ -155,7 +154,6 @@ public class AddNewEventActivity extends BaseCompat {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
                         hideProgressDialog();
                     }
                 });

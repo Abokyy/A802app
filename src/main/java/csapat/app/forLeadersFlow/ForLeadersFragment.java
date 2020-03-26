@@ -115,7 +115,6 @@ public class ForLeadersFragment extends Fragment {
                     };
                     rewardedAd.show(getActivity(), adCallback);
                 } else {
-                    Log.d("TAG", "The rewarded ad wasn't loaded yet.");
                 }
             }
         });

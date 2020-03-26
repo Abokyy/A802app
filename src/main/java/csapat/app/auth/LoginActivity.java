@@ -120,13 +120,12 @@ public class LoginActivity extends BaseCompat {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            //Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 
                             if (user.isEmailVerified())
                                 readData();
                             else {
-                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                Toast.makeText(LoginActivity.this, "Nincs megerősítve az email címed!",
                                         Toast.LENGTH_SHORT).show();
                                 hideProgressDialog();
                             }

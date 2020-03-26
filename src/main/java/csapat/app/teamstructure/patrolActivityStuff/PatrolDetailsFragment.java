@@ -53,41 +53,36 @@ public class PatrolDetailsFragment extends Fragment {
 
         Button leader = root.findViewById(R.id.unit_leader_name);
         TextView name = root.findViewById(R.id.unit_name);
-        try {
-            name.setText(patrol.getName() + " őrs");
-            leader.setText("Őrsvezető: " + patrol.getLeader());
-            leader.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    db.collection("users")
-                            .whereEqualTo("fullName", patrol.getLeader())
-                            .get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        for (DocumentSnapshot document : task.getResult()) {
-                                            String username;
-                                            username = document.getString("username");
-                                            Intent showNextLevel = new Intent();
-                                            showNextLevel.setClass(getActivity(), UserProfileActivity.class);
-                                            showNextLevel.putExtra(UserProfileActivity.EXTRA_USER_NAME_TO_CHECK, username);
-                                            startActivity(showNextLevel);
-                                        }
-                                    } else {
-
-                                        Toast.makeText(getActivity(), "Nem találtunk felhasználót", Toast.LENGTH_LONG).show();
-
+        name.setText(patrol.getName() + " őrs");
+        leader.setText("Őrsvezető: " + patrol.getLeader());
+        leader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.collection("users")
+                        .whereEqualTo("fullName", patrol.getLeader())
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (DocumentSnapshot document : task.getResult()) {
+                                        String username;
+                                        username = document.getString("username");
+                                        Intent showNextLevel = new Intent();
+                                        showNextLevel.setClass(getActivity(), UserProfileActivity.class);
+                                        showNextLevel.putExtra(UserProfileActivity.EXTRA_USER_NAME_TO_CHECK, username);
+                                        startActivity(showNextLevel);
                                     }
-                                }
-                            });
-                }
-            });
-        } catch (Exception e) {
-            Log.d("baj", "baj");
-            Toast.makeText(getActivity(), "Nem találtunk felhasználót", Toast.LENGTH_LONG).show();
+                                } else {
 
-        }
+                                    Toast.makeText(getActivity(), "Nem találtunk felhasználót", Toast.LENGTH_LONG).show();
+
+                                }
+                            }
+                        });
+            }
+        });
+
 
         return root;
     }

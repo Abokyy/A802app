@@ -62,7 +62,6 @@ public class ProjectorWhereaboutsActivity extends BaseCompat {
 
                 ProjectorWhereabouts projWhere = dataSnapshot.getValue(ProjectorWhereabouts.class);
                 assert projWhere != null;
-                Log.d("DB access", "successful");
                 projectorWhereabouts.setText(projWhere.getLocation());
             }
 
@@ -70,7 +69,6 @@ public class ProjectorWhereaboutsActivity extends BaseCompat {
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 ProjectorWhereabouts projWhere = dataSnapshot.getValue(ProjectorWhereabouts.class);
                 assert projWhere != null;
-                Log.d("DB access", "successful");
                 projectorWhereabouts.setText(projWhere.getLocation());
             }
 

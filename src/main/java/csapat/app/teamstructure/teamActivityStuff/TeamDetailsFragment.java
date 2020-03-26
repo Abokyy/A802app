@@ -87,7 +87,7 @@ public class TeamDetailsFragment extends Fragment {
                 }
             });
         } catch (Exception e) {
-
+            Toast.makeText(getActivity(), "Nem találtunk felhasználót", Toast.LENGTH_LONG).show();
         }
 
         return root;

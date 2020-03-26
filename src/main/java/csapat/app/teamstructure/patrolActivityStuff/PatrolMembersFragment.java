@@ -9,12 +9,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -104,12 +106,10 @@ public class PatrolMembersFragment extends Fragment implements StructureItemAdap
                                 startActivity(showNextLevel);
                             }
                         } else {
-
-                            //TODO
+                            Toast.makeText(getActivity(), "Nem találtunk regisztrált felhasználót! :(", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-
 
 
     }

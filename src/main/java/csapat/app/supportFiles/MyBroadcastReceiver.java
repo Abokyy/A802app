@@ -1,11 +1,13 @@
 package csapat.app.supportFiles;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import csapat.app.BaseCompat;
 import csapat.app.NavMainActivity;
+import csapat.app.teamstructure.model.AppUser;
 
 public class MyBroadcastReceiver extends BroadcastReceiver {
     private static final String TAG = "MyBroadcastReceiver";
@@ -33,11 +36,14 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         private final Intent intent;
         @SuppressLint("StaticFieldLeak")
         private final Context context;
+        private AppUser appUser;
+        private boolean yesAnswer = false;
 
         private Task(PendingResult pendingResult, Intent intent, Context context) {
             this.pendingResult = pendingResult;
             this.intent = intent;
             this.context = context;
+            appUser = SaveSharedPreference.getAppUser(context);
         }
 
         @Override
@@ -50,20 +56,22 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
             int not_id = intent.getIntExtra("notID", 0);
 
             if(action.equals(NavMainActivity.ACTION_YES)) {
-                Log.d("Action yes", "Pressed");
                 NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                 assert notificationManager != null;
                 notificationManager.cancel(1);
 
-                FirebaseFirestore db = BaseCompat.db;
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                DocumentReference documentReference= db.collection("patrols").document(BaseCompat.appUser.getPatrol());
+                DocumentReference documentReference= db.collection("patrols").document(appUser.getPatrol());
 
-                documentReference.update("nextMeetingAttendance", FieldValue.arrayUnion(BaseCompat.appUser.getFullName()));
+                documentReference.update("nextMeetingAttendance", FieldValue.arrayUnion(appUser.getFullName()));
 
-                DocumentReference userReference = db.collection("users").document(BaseCompat.appUser.getUserID());
+                DocumentReference userReference = db.collection("users").document(appUser.getUserID());
 
                 userReference.update("answeredNextMeetingRequest", true);
+                yesAnswer = true;
+
+            } else if(action.equals(NavMainActivity.ACTION_NO)) {
 
             }
 
@@ -75,11 +83,13 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             // Must call finish() so the BroadcastReceiver can be recycled.
-            Toast.makeText(context,"Igen válasz elküldve.", Toast.LENGTH_LONG).show();
-            BaseCompat.appUser.setAnsweredToNextMeeting(true);
-            SaveSharedPreference.setPrefUserAnsweredToNextMeeting(context, BaseCompat.appUser, true);
-
-            Log.d("Task: ", "Executed " + s);
+            if(yesAnswer) {
+                Toast.makeText(context, "Igen válasz elküldve.", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(context, "Nem válasz elküldve.", Toast.LENGTH_LONG).show();
+            }
+            appUser.setAnsweredToNextMeeting(true);
+            SaveSharedPreference.setPrefUserAnsweredToNextMeeting(context, appUser, true);
             pendingResult.finish();
         }
     }

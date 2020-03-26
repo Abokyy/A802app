@@ -63,7 +63,6 @@ public class TeamStructureFragment extends Fragment implements StructureItemAdap
                                 troops.add(document.getString("name"));
                             }
                         } else {
-                            Log.d(TAG, "Cached get failed: ", task.getException());
                         }
                         initRecyclerView(view);
                     }

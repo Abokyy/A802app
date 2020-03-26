@@ -92,6 +92,7 @@
         <AutoCompleteTextView
             android:hint="@string/choose_patrol"
             android:id="@+id/autocomplete_patrol"
+            android:layout_marginVertical="8dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 

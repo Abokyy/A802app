@@ -90,7 +90,6 @@ class TaskListActivity : BaseCompat(), TaskItemAdapter.taskItemClickListener {
                                             adapter.addItem(taskSolution, docID)
                                         }
                                     }
-                                    DocumentChange.Type.MODIFIED -> Log.d(TAG, "Modified taskSolution: ${dc.document.data}")
                                     DocumentChange.Type.REMOVED -> adapter.deleteItem(docID)
                                 }
                             }
@@ -102,7 +101,6 @@ class TaskListActivity : BaseCompat(), TaskItemAdapter.taskItemClickListener {
                 db.collection("taskSolutions")
                         .addSnapshotListener { snapshots, e ->
                             if (e != null) {
-                                Log.w(TAG, "listen:error", e)
                                 return@addSnapshotListener
                             }
 
@@ -115,7 +113,6 @@ class TaskListActivity : BaseCompat(), TaskItemAdapter.taskItemClickListener {
                                             adapter.addItem(taskSolution, docID)
                                         }
                                     }
-                                    DocumentChange.Type.MODIFIED -> Log.d(TAG, "Modified taskSolution: ${dc.document.data}")
                                     DocumentChange.Type.REMOVED -> adapter.deleteItem(docID)
                                 }
                             }

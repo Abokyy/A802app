@@ -2,9 +2,12 @@ package csapat.app.newsfeed;
 
 import androidx.annotation.NonNull;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -33,6 +36,7 @@ import csapat.app.supportFiles.SaveSharedPreference;
 public class AddNewNewActivity extends BaseCompat {
 
     private final int PICK_IMAGE_REQUEST = 71;
+    private final int PERMISSION_CODE = 1000;
     private Uri filePath;
     private String imagePath;
     ImageView imageView;
@@ -52,7 +56,23 @@ public class AddNewNewActivity extends BaseCompat {
         imageChooserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chooseImage();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
+                            PackageManager.PERMISSION_DENIED) {
+                        //permission denied
+                        String[] permissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
+                        //show popup to request runtime permission
+                        requestPermissions(permissions, PERMISSION_CODE);
+                    } else {
+                        //permission already granted
+                        chooseImage();
+                    }
+                } else {
+                    //system OS is < Marshmallow
+                    chooseImage();
+                }
+
             }
         });
 
@@ -60,6 +80,10 @@ public class AddNewNewActivity extends BaseCompat {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(filePath == null) {
+                    Toast.makeText(AddNewNewActivity.this, "Válassz képet a hírhez", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 uploadImage();
                 Map<String, Object> data = new HashMap<>();
                 data.put("author", SaveSharedPreference.getAppUser(AddNewNewActivity.this).getFullName());
@@ -98,6 +122,27 @@ public class AddNewNewActivity extends BaseCompat {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_CODE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    chooseImage();
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                } else {
+                    Toast.makeText(AddNewNewActivity.this, "Engedély elutasítva", Toast.LENGTH_SHORT).show();
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                break;
+            }
+        }
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

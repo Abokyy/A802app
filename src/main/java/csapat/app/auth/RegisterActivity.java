@@ -96,7 +96,6 @@ public class RegisterActivity extends BaseCompat {
                                 patrols.add(document.getString("name"));
                             }
                         } else {
-                            Log.d(TAG, "Cached get failed: ", task.getException());
                         }
                     }
                 });
@@ -128,7 +127,6 @@ public class RegisterActivity extends BaseCompat {
 
 
     public void createUserWithEmailAndPassword(){
-        Log.d(TAG, "createAccount:" + etEmail);
         if (!validateForm()) {
             return;
         }
@@ -141,7 +139,6 @@ public class RegisterActivity extends BaseCompat {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -149,6 +146,8 @@ public class RegisterActivity extends BaseCompat {
                                     if(task.isSuccessful()) {
                                         createUserInDB();
                                         mAuth.signOut();
+                                        Toast.makeText(RegisterActivity.this, "Kérlek erősítsd meg az email címed!",
+                                                Toast.LENGTH_LONG).show();
                                         finish();
                                     }
                                 }
@@ -196,7 +195,6 @@ public class RegisterActivity extends BaseCompat {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
                         referenceID[0] = documentReference.getId();
                     }
                 })
