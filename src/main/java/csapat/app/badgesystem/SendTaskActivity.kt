@@ -43,6 +43,7 @@ class SendTaskActivity : BaseCompat() {
         submitTaskSolutionBtn.setOnClickListener {
 
             if(image == null) {
+                hideKeyboard(currentFocus)
                 Toast.makeText(this, "Csatolj a megoldásodhoz képet!", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }

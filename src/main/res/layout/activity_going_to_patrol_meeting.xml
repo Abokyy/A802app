@@ -8,18 +8,24 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Mész a következő őrsire?"/>
+        android:textSize="30sp"
+        android:layout_margin="20dp"
+        android:text="@string/going_to_next_meeting"/>
 
     <Button
+        android:id="@+id/yesResponseBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="IGEN"
+        android:text="@string/yes"
+        android:textSize="30sp"
         android:layout_margin="20dp"/>
 
     <Button
+        android:id="@+id/noResponseBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="NEM"
+        android:text="@string/no"
+        android:textSize="30sp"
         android:layout_margin="20dp"/>
 
 

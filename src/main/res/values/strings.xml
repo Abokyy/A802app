@@ -54,4 +54,6 @@
     <string name="support_ad">Támogató reklám (béta)</string>
     <string name="yes">Igen</string>
     <string name="there_is_nothing_here">Nincs itt semmi :(</string>
+    <string name="going_to_next_meeting">Mész a következő őrsire?</string>
+    <string name="no">Nem</string>
 </resources>
