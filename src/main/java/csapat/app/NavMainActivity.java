@@ -15,6 +15,7 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 
+import com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -33,6 +34,7 @@ import androidx.navigation.ui.NavigationUI;
 import java.util.Calendar;
 
 import csapat.app.auth.LoginActivity;
+import csapat.app.supportFiles.AlarmReceiver;
 import csapat.app.supportFiles.MyBroadcastReceiver;
 import csapat.app.supportFiles.MyNotificationPublisher;
 import csapat.app.supportFiles.SaveSharedPreference;
@@ -46,12 +48,14 @@ public class NavMainActivity extends BaseCompat {
     public final static String ACTION_YES = "yes";
     public final static String ACTION_NO = "no";
     public static final String GUEST_LOGIN = "none";
+    private AlarmManager alarmManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         MobileAds.initialize(this, getString(R.string.ADMOB_APP_ID));
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         notificationManagerCompat = NotificationManagerCompat.from(this);
         createNotificationChannel();
@@ -81,25 +85,29 @@ public class NavMainActivity extends BaseCompat {
                     navView.getMenu().clear();
                     navView.inflateMenu(R.menu.bottom_nav_menu_for_leader);
 
-                    if (!appUser.answeredToNextMeeting()) {
-                        DocumentReference documentReference = db.collection("patrols").document(appUser.getPatrol());
-
-                        documentReference
-                                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @SuppressLint("SetTextI18n")
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                Patrol patrol;
-                                patrol = documentSnapshot.toObject(Patrol.class);
-                                scheduleNotification(patrol);
-
-                            }
-                        });
-                    }
                 } else {
                     findViewById(R.id.nav_host_fragment_for_guests).setVisibility(View.GONE);
                     navController = Navigation.findNavController(this, R.id.nav_host_fragment);
                 }
+
+
+                DocumentReference documentReference = db.collection("patrols").document(appUser.getPatrol());
+
+                documentReference
+                        .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Patrol patrol;
+                        patrol = documentSnapshot.toObject(Patrol.class);
+                        if (!appUser.answeredToNextMeeting())
+                            scheduleNotification(patrol);
+                        else
+                            scheduleWeeklyClearOfResponses(patrol);
+
+                    }
+                });
+
 
                 assert navController != null;
                 NavigationUI.setupWithNavController(navView, navController);
@@ -118,7 +126,6 @@ public class NavMainActivity extends BaseCompat {
                     assert navController != null;
                     NavigationUI.setupWithNavController(navView, navController);
                 }
-
 
 
             } catch (Exception e) {
@@ -180,7 +187,7 @@ public class NavMainActivity extends BaseCompat {
         builder.setContentIntent(pendIntent);
         builder.setChannelId(CHANNEL_ID);
         builder.addAction(R.drawable.leadericon, getString(R.string.yes), yesPendingIntent);
-        builder.addAction(R.drawable.leadericon, "Nem", noPendingIntent);
+        builder.addAction(R.drawable.leadericon, getString(R.string.no), noPendingIntent);
 
         Notification notification = builder.build();
 
@@ -188,11 +195,35 @@ public class NavMainActivity extends BaseCompat {
         notificationIntent.putExtra(MyNotificationPublisher.NOTIFICATION_ID, 1);
         notificationIntent.putExtra(MyNotificationPublisher.NOTIFICATION, notification);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        assert alarmManager != null;
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-        //alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP , SystemClock. elapsedRealtime () + 5000 , pendingIntent) ;
 
+    }
+
+    public void scheduleWeeklyClearOfResponses(Patrol patrol) {
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(System.currentTimeMillis());
+
+        assert patrol != null;
+
+        int dayToAskForMeeting = patrol.getMeetingDay();
+
+        if (dayToAskForMeeting == 7) {
+            dayToAskForMeeting = 1;
+            cal.set(Calendar.DAY_OF_WEEK, dayToAskForMeeting);
+        } else {
+            cal.set(Calendar.DAY_OF_WEEK, dayToAskForMeeting + 1);
+        }
+
+        cal.set(Calendar.HOUR_OF_DAY, patrol.getMeetingHour());
+        cal.set(Calendar.MINUTE, patrol.getMeetingMinute());
+        cal.set(Calendar.SECOND, 0);
+
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.setAction("clearAnswer");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 2, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
     @Override

@@ -50,19 +50,19 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         protected String doInBackground(String... strings) {
 
 
-
             String action = intent.getAction();
 
             int not_id = intent.getIntExtra("notID", 0);
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            if(action.equals(NavMainActivity.ACTION_YES)) {
+
+            if (action.equals(NavMainActivity.ACTION_YES)) {
                 NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                 assert notificationManager != null;
                 notificationManager.cancel(1);
 
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                DocumentReference documentReference= db.collection("patrols").document(appUser.getPatrol());
+                DocumentReference documentReference = db.collection("patrols").document(appUser.getPatrol());
 
                 documentReference.update("nextMeetingAttendance", FieldValue.arrayUnion(appUser.getFullName()));
 
@@ -71,8 +71,15 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                 userReference.update("answeredNextMeetingRequest", true);
                 yesAnswer = true;
 
-            } else if(action.equals(NavMainActivity.ACTION_NO)) {
+            } else if (action.equals(NavMainActivity.ACTION_NO)) {
 
+                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                assert notificationManager != null;
+                notificationManager.cancel(1);
+
+                DocumentReference userReference = db.collection("users").document(appUser.getUserID());
+
+                userReference.update("answeredNextMeetingRequest", true);
             }
 
 
@@ -83,7 +90,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             // Must call finish() so the BroadcastReceiver can be recycled.
-            if(yesAnswer) {
+            if (yesAnswer) {
                 Toast.makeText(context, "Igen válasz elküldve.", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(context, "Nem válasz elküldve.", Toast.LENGTH_LONG).show();
