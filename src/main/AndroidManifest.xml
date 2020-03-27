@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".badgesystem.ScoreboardActivity"></activity>
+        <activity android:name=".badgesystem.ScoreboardActivity" />
         <activity android:name=".badgesystem.TaskSolutionDetails" />
         <activity android:name=".badgesystem.TaskListActivity" />
         <activity android:name=".badgesystem.SendTaskActivity" />
@@ -44,15 +44,8 @@
         <activity android:name=".auth.RegisterActivity" />
         <activity android:name=".teamstructure.patrolActivityStuff.PatrolDetailActivity" />
         <activity android:name=".teamstructure.UserProfileActivity" />
-        <!--
-<service
-            android:name=".java.MyFirebaseMessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-        -->
+
+
         <receiver android:name=".supportFiles.MyNotificationPublisher" />
         <receiver android:name=".supportFiles.MyBroadcastReceiver" />
         <receiver android:name=".supportFiles.AlarmReceiver"/>

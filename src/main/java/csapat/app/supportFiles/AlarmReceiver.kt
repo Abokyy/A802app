@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.AsyncTask
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import csapat.app.NavMainActivity
 
 class AlarmReceiver : BroadcastReceiver() {
 
@@ -19,6 +20,7 @@ class AlarmReceiver : BroadcastReceiver() {
         task.execute()
 
     }
+
 
     private class Task(pendingResult: PendingResult, private val intent: Intent?, private val context: Context?) : AsyncTask<String, Int, String>() {
 
@@ -42,11 +44,6 @@ class AlarmReceiver : BroadcastReceiver() {
             }
 
             return "done"
-
-        }
-
-        override fun onPostExecute(result: String?) {
-            super.onPostExecute(result)
 
         }
 

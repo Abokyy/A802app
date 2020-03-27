@@ -61,10 +61,6 @@ public class NavMainActivity extends BaseCompat {
         createNotificationChannel();
 
 
-        //OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(NotifyWorker.class).build();
-
-        //WorkManager.getInstance(NavMainActivity.this).enqueue(oneTimeWorkRequest);
-
 
         if (SaveSharedPreference.getAppUser(NavMainActivity.this).getUsername().length() == 0) {
             Intent loginAct = new Intent(NavMainActivity.this, LoginActivity.class);
@@ -220,10 +216,9 @@ public class NavMainActivity extends BaseCompat {
         cal.set(Calendar.SECOND, 0);
 
         Intent intent = new Intent(this, AlarmReceiver.class);
-        intent.setAction("clearAnswer");
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 2, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY*7, pendingIntent);
     }
 
     @Override
