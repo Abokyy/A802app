@@ -3,6 +3,8 @@
     android:orientation="vertical"
     android:layout_gravity="center"
     android:layout_width="wrap_content"
+    android:background="@color/colorPrimaryLight"
+    android:padding="20dp"
     android:layout_height="wrap_content"
     android:theme="@style/AppTheme">
 
@@ -15,10 +17,11 @@
 
     <TextView
         android:id="@+id/detailedBadgeName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textAlignment="center"
         android:layout_gravity="center"
-        android:textSize="40sp"/>
+        android:autoSizeTextType="uniform"/>
 
     <TextView
         android:id="@+id/badgePointNumber"
@@ -30,8 +33,9 @@
 
     <TextView
         android:id="@+id/badgeDescription"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:justificationMode="inter_word"
         android:layout_gravity="center"
         android:textSize="25sp"/>
 
@@ -40,7 +44,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="#FFFFFF"
         android:text="@string/unlock"
         />
 

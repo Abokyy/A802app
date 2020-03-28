@@ -4,12 +4,15 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_gravity="center"
+    android:layout_marginVertical="5dp"
+    android:layout_marginHorizontal="10dp"
     android:layout_height="wrap_content">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="5dp"
         android:weightSum="12"
         android:orientation="horizontal">
 
@@ -17,8 +20,8 @@
             android:id="@+id/scoreBoardItemName"
             android:layout_width="0dp"
             android:layout_weight="6"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:layout_height="match_parent"
+            android:autoSizeTextType="uniform"
             android:text="Felhasználó neve" />
 
         <TextView
@@ -26,6 +29,7 @@
             android:layout_width="0dp"
             android:layout_weight="4"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:textSize="20sp"
             android:text="Őrs neve" />
 

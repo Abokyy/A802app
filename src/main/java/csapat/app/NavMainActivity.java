@@ -96,10 +96,11 @@ public class NavMainActivity extends BaseCompat {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         Patrol patrol;
                         patrol = documentSnapshot.toObject(Patrol.class);
+                        if(patrol.getMeetingHour() == -1) return;
                         if (!appUser.answeredToNextMeeting())
                             scheduleNotification(patrol);
-                        else
-                            scheduleWeeklyClearOfResponses(patrol);
+                        //else
+                            //scheduleWeeklyClearOfResponses(patrol);
 
                     }
                 });
@@ -147,10 +148,11 @@ public class NavMainActivity extends BaseCompat {
 
         assert patrol != null;
 
-        int dayToAskForMeeting = patrol.getMeetingDay();
+        int dayToAskForMeeting = patrol.getMeetingDay()+1;
 
-        if (dayToAskForMeeting == 7) {
+        if (dayToAskForMeeting == 8) {
             dayToAskForMeeting = 1;
+
             cal.set(Calendar.DAY_OF_WEEK, dayToAskForMeeting);
         } else {
             cal.set(Calendar.DAY_OF_WEEK, dayToAskForMeeting + 1);
@@ -216,7 +218,8 @@ public class NavMainActivity extends BaseCompat {
         cal.set(Calendar.SECOND, 0);
 
         Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 2, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        intent.setAction("clearAnswer");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 2, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY*7, pendingIntent);
     }
@@ -230,7 +233,7 @@ public class NavMainActivity extends BaseCompat {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.really_logout)
                     .setMessage(R.string.are_you_sure_to_logout)
-                    .setNegativeButton(android.R.string.no, null)
+                    .setNegativeButton(R.string.cancel, null)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                         @Override

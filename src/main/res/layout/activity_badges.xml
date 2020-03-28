@@ -17,7 +17,9 @@
             <TextView
                 android:id="@+id/personalBadges"
                 android:layout_width="match_parent"
-                android:text="Saját kitűzők"
+                android:text="@string/personal_badges"
+                android:textAlignment="center"
+                android:background="@color/colorPrimaryDark"
                 android:textSize="30sp"
                 android:layout_height="wrap_content" />
 
@@ -34,7 +36,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="30sp"
-                android:text="Őrsi kitűzők"/>
+                android:background="@color/colorPrimaryDark"
+                android:textAlignment="center"
+                android:text="@string/patrol_badges"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/patrol_badge_list_View"

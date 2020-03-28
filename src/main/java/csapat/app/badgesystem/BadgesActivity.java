@@ -1,16 +1,20 @@
 package csapat.app.badgesystem;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -25,7 +29,7 @@ import java.util.List;
 import csapat.app.BaseCompat;
 import csapat.app.R;
 
-public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeViewItemSelectedListener {
+public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeViewItemSelectedListener, SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView personalRecyclerView;
     private RecyclerView patrolRecyclerView;
@@ -38,6 +42,7 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
     private List<Long> unlockedPersonalBadges;
     private List<Long> unlockedPatrolBadges;
     private static final String TAG = "badgesactivity";
+    private SwipeRefreshLayout swipeContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,8 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
         showProgressDialog();
 
 
+        swipeContainer = findViewById(R.id.swipeBadgeContainer);
+        swipeContainer.setOnRefreshListener(this);
         allpersonalBadge = new ArrayList<>();
         unlockedPersonalBadges = new ArrayList<>();
         allPatrolBadges = new ArrayList<>();
@@ -137,6 +144,18 @@ public class BadgesActivity extends BaseCompat implements BadgeAdapter.OnBadgeVi
 
         DialogFragment dialogFragment = BadgeDescriptionDialogFragment.newInstance(badge, unlocked);
         dialogFragment.show(ft, TAG);
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void run() {
+                //adapter.update(allEvents);
+                swipeContainer.setRefreshing(false);
+            }
+        }, 2000);
     }
 
     @Override

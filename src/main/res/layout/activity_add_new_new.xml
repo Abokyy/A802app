@@ -11,39 +11,51 @@
     android:paddingVertical="20dp"
     android:layout_height="match_parent">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/new_title_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="12dp"
+        android:layout_marginHorizontal="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
 
     <EditText
         android:id="@+id/new_new_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="32dp"
-        android:hint="Cím"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:hint="Cím">
 
     </EditText>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/new_description_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:layout_marginHorizontal="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/new_title_input_layout" >
+
 
     <EditText
         android:id="@+id/new_new_descreption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/new_new_title"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:hint="Leírás..."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_new_title" />
+        android:hint="Leírás..." />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
         android:id="@+id/submit_new_new_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/new_new_descreption"
+        android:layout_below="@id/new_description_input_layout"
         android:layout_alignParentEnd="true"
         android:layout_marginVertical="32dp"
         android:text="Közzététel"
@@ -55,14 +67,14 @@
         android:id="@+id/choose_image_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/new_new_descreption"
+        android:layout_below="@+id/new_description_input_layout"
         android:layout_alignParentEnd="true"
         android:layout_marginVertical="24dp"
         android:text="Kép választása"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_new_descreption" />
+        app:layout_constraintTop_toBottomOf="@+id/new_description_input_layout" />
 
     <ImageView
         android:id="@+id/imageViewForUpload"
@@ -74,7 +86,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/choose_image_button"
-        app:srcCompat="@drawable/calendar" />
+        android:tint="@color/colorPrimaryDark"
+        app:srcCompat="@drawable/photo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

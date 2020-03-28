@@ -111,6 +111,7 @@ public class LoginActivity extends BaseCompat {
             return;
         }
 
+        hideKeyboard(getCurrentFocus());
         showProgressDialog();
 
 

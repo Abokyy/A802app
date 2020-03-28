@@ -8,28 +8,32 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingVertical="30dp">
 
-
-
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/task_solution_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="12dp"
+            android:layout_marginHorizontal="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" >
 
         <EditText
             android:id="@+id/taskSolutionET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="32dp"
-            android:hint="Megoldás leírása..."
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:hint="Megoldás leírása..."/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/submitTaskSolutionBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/taskSolutionET"
+            android:layout_below="@id/task_solution_input_layout"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="32dp"
@@ -42,14 +46,14 @@
             android:id="@+id/choose_image_for_task_solution"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/taskSolutionET"
+            android:layout_below="@+id/task_solution_input_layout"
             android:layout_alignParentEnd="true"
             android:layout_marginVertical="24dp"
             android:text="Kép hozzáadása"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/taskSolutionET" />
+            app:layout_constraintTop_toBottomOf="@+id/task_solution_input_layout" />
 
         <ImageView
             android:id="@+id/imageForTaskSolution"
@@ -61,7 +65,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/choose_image_for_task_solution"
-            app:srcCompat="@drawable/calendar" />
+            android:tint="@color/colorPrimaryDark"
+            app:srcCompat="@drawable/photo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

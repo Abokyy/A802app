@@ -11,7 +11,7 @@ public class Patrol {
     private List<String> nextMeetingAttendance = new ArrayList<>();
     private String name;
     private int meetingDay;
-    private int meetingHour;
+    private int meetingHour = -1;
     private int meetingMinute;
     private String meetingLocation;
     private boolean activePatrol = true;
