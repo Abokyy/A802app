@@ -86,7 +86,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/choose_image_button"
-        android:tint="@color/colorPrimaryDark"
         app:srcCompat="@drawable/photo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

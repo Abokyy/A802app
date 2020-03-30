@@ -60,4 +60,5 @@
     <string name="personal_badges">Saját kitűzők</string>
     <string name="event_title">Esemény neve</string>
     <string name="cancel">Mégse</string>
+    <string name="privacy_policy">Kjelentem, hogy elfogadom az <a href = "https://802-szent-korona.flycricket.io/privacy.html" target = "top">Adatvédelmi szabályzatot</a>.</string>
 </resources>

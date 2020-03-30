@@ -4,12 +4,15 @@ import androidx.annotation.NonNull;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,6 +49,8 @@ public class RegisterActivity extends BaseCompat {
     private FirebaseFirestore db;
     private List<String> patrols;
     private AutoCompleteTextView patrolsTextview;
+    private CheckBox privacyCB;
+    private TextView privacyTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,9 @@ public class RegisterActivity extends BaseCompat {
         etFirstName = findViewById(R.id.etLastName);
         etLastName = findViewById(R.id.etFirstName);
         etUsername = findViewById(R.id.etUsername);
+        privacyCB = findViewById(R.id.privacy_policy_checkbox);
+        privacyTV = findViewById(R.id.accept_privacy_policy_tv);
+        privacyTV.setMovementMethod(LinkMovementMethod.getInstance());
         patrolsTextview = findViewById(R.id.autocomplete_patrol);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, patrols);
@@ -77,7 +85,11 @@ public class RegisterActivity extends BaseCompat {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (privacyCB.isChecked())
                     createUserWithEmailAndPassword();
+                else {
+                    Toast.makeText(RegisterActivity.this, "Fogadd el az Adatvédelmi szabályzatot!", Toast.LENGTH_LONG).show();
+                }
 
 
             }
