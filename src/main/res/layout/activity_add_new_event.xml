@@ -2,30 +2,30 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:paddingVertical="20dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingVertical="20dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/event_title_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="12dp"
             android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
+            app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/event_title_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="15"
-            android:hint="@string/event_title"
-            />
+            <EditText
+                android:id="@+id/event_title_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="15"
+                android:hint="@string/event_title" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -34,8 +34,8 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="20dp"
             android:layout_marginHorizontal="40dp"
+            android:layout_marginVertical="20dp"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/event_title_input_layout"
             tools:targetApi="o">
@@ -53,53 +53,87 @@
                 android:id="@+id/multiple_day_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:theme="@style/SwitchTheme"
                 android:layout_weight="1" />
         </LinearLayout>
 
-        <DatePicker
-            android:id="@+id/startDatePicker"
+        <LinearLayout
+            android:id="@+id/startingTimeLL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
             android:layout_marginTop="32dp"
-            android:calendarViewShown="false"
-            android:datePickerMode="spinner"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-        <TimePicker
-            android:id="@+id/startTimePicker"
+            <TextView
+                android:text="@string/start_of_event"
+                android:layout_marginHorizontal="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"/>
+
+            <DatePicker
+                android:id="@+id/startDatePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TimePicker
+                android:id="@+id/startTimePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:timePickerMode="spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/startDatePicker" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/endingTimeLL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_marginTop="32dp"
-            android:timePickerMode="spinner"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/startDatePicker" />
-
-        <DatePicker
-            android:id="@+id/endDatePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:calendarViewShown="false"
-            android:datePickerMode="spinner"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/startTimePicker"
-            android:visibility="gone"/>
-
-        <TimePicker
-            android:id="@+id/endTimePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:timePickerMode="spinner"
             android:visibility="gone"
+            android:gravity="center_horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/endDatePicker"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/startingTimeLL">
+
+            <TextView
+                android:text="@string/end_of_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"/>
+
+
+            <DatePicker
+                android:id="@+id/endDatePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TimePicker
+                android:id="@+id/endTimePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:timePickerMode="spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/endDatePicker" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/submitBtn"
@@ -109,7 +143,7 @@
             android:text="Közzététel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/endTimePicker" />
+            app:layout_constraintTop_toBottomOf="@+id/endingTimeLL" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

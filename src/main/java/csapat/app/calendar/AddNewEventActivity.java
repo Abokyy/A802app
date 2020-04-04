@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -63,6 +64,7 @@ public class AddNewEventActivity extends BaseCompat {
         startTimePicker = findViewById(R.id.startTimePicker);
         endTimePicker = findViewById(R.id.endTimePicker);
         endDatePicker = findViewById(R.id.endDatePicker);
+        final LinearLayout endingDateLL = findViewById(R.id.endingTimeLL);
 
         multipleDaySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -70,12 +72,10 @@ public class AddNewEventActivity extends BaseCompat {
 
                 if (isChecked) {
                     switchState = true;
-                    endDatePicker.setVisibility(View.VISIBLE);
-                    endTimePicker.setVisibility(View.VISIBLE);
+                    endingDateLL.setVisibility(View.VISIBLE);
                 } else {
                     switchState = false;
-                    endDatePicker.setVisibility(View.GONE);
-                    endTimePicker.setVisibility(View.GONE);
+                    endingDateLL.setVisibility(View.GONE);
                 }
             }
         });

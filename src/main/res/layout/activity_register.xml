@@ -98,6 +98,7 @@
             android:hint="@string/choose_patrol"
             android:id="@+id/autocomplete_patrol"
             android:layout_width="fill_parent"
+            android:paddingHorizontal="10dp"
             android:layout_height="60dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
