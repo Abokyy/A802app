@@ -46,7 +46,7 @@ public class NewsFragment extends Fragment implements NewsAdapter.OnViewItemSele
 
         FloatingActionButton fab = root.findViewById(R.id.news_feed_floating_button);
 
-        if(SaveSharedPreference.getAppUser(getActivity()).getRank() == 1 ||SaveSharedPreference.getAppUser(getActivity()).getUsername().equals("802guest")) {
+        if(SaveSharedPreference.getAppUser(getActivity()).getRank() == 1 || SaveSharedPreference.getAppUser(getActivity()).getUsername().equals("802guest")) {
             CoordinatorLayout.LayoutParams p = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
             p.setBehavior(null); //should disable default animations
             p.setAnchorId(View.NO_ID); //should let you set visibility

@@ -117,6 +117,60 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:adjustViewBounds="true"
+                android:maxWidth="50dp"
+                android:maxHeight="50dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/money"
+                android:tint="@color/colorSecondary" />
+
+
+            <Button
+                android:id="@+id/tradingGameBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kereskedős játék" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:adjustViewBounds="true"
+                android:maxWidth="50dp"
+                android:maxHeight="50dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/check_attendance"
+                android:tint="@color/colorSecondary" />
+
+
+            <Button
+                android:id="@+id/nextMeetingAttendanceBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mész a következő őrsire?" />
+
+        </LinearLayout>
+
+
+
     </LinearLayout>
 
 

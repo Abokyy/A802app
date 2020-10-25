@@ -60,6 +60,23 @@
     <string name="personal_badges">Saját kitűzők</string>
     <string name="event_title">Esemény neve</string>
     <string name="cancel">Mégse</string>
-    <string name="privacy_policy">Kjelentem, hogy elfogadom az <a href = "https://802-szent-korona.flycricket.io/privacy.html" target = "top">Adatvédelmi szabályzatot</a>.</string>
+    <string name="privacy_policy">Kjelentem, hogy elfogadom az <a href="https://802-szent-korona.flycricket.io/privacy.html" target="top">Adatvédelmi szabályzatot</a>.</string>
     <string name="end_of_event">Esemény vége</string>
+    <string name="resources">Nyersanyagok</string>
+    <string name="password">Jelszó</string>
+    <string name="game_name">Játék neve</string>
+    <string name="default_notification_channel_id">default</string>
+    <string name="data_type">data_type</string>
+    <string name="meeting_attendance_notification">meeting_attendance_notification</string>
+    <string name="subscribed_next_meet_att_not">Subscribed to next meeting att not</string>
+    <string name="subscribe_failed">Subscribe failed</string>
+    <string name="title_activity_join_game">Join game</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 </resources>

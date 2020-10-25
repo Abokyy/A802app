@@ -12,6 +12,13 @@
         android:layout_margin="20dp"
         android:text="@string/going_to_next_meeting"/>
 
+    <TextView
+        android:id="@+id/responseTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:layout_margin="20dp"/>
+
     <Button
         android:id="@+id/yesResponseBtn"
         android:layout_width="match_parent"

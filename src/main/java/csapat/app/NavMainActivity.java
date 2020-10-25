@@ -1,66 +1,49 @@
 package csapat.app;
 
-import android.annotation.SuppressLint;
-import android.app.AlarmManager;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 
-import com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.NotificationCompat;
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import java.util.Calendar;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import csapat.app.auth.LoginActivity;
-import csapat.app.supportFiles.AlarmReceiver;
-import csapat.app.supportFiles.MyBroadcastReceiver;
-import csapat.app.supportFiles.MyNotificationPublisher;
 import csapat.app.supportFiles.SaveSharedPreference;
-import csapat.app.teamstructure.model.Patrol;
 
 public class NavMainActivity extends BaseCompat {
 
     public NotificationManagerCompat notificationManagerCompat;
     public static final String CHANNEL_ID = "notificationCH";
-    private final static String default_notification_channel_id = "default";
+    private final static String TAG = "NAVMAINACTIVITY";
     public final static String ACTION_YES = "yes";
     public final static String ACTION_NO = "no";
-    public static final String GUEST_LOGIN = "none";
-    private AlarmManager alarmManager;
+    //public static final String GUEST_LOGIN = "none";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         MobileAds.initialize(this, getString(R.string.ADMOB_APP_ID));
-        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        firebaseMessaging.setAutoInitEnabled(true);
 
         notificationManagerCompat = NotificationManagerCompat.from(this);
         createNotificationChannel();
-
-
 
         if (SaveSharedPreference.getAppUser(NavMainActivity.this).getUsername().length() == 0) {
             Intent loginAct = new Intent(NavMainActivity.this, LoginActivity.class);
@@ -70,8 +53,30 @@ public class NavMainActivity extends BaseCompat {
             appUser = SaveSharedPreference.getAppUser(NavMainActivity.this);
             setContentView(R.layout.activity_nav_main);
 
+            FirebaseInstanceId.getInstance().getInstanceId()
+                    .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                            if (!task.isSuccessful()) {
+                                Log.w(TAG, "getInstanceId failed", task.getException());
+                                return;
+                            }
 
-            NavController navController = null;
+                            // Get new Instance ID token
+                            String token = task.getResult().getToken();
+
+                            DocumentReference documentReference = db.collection("users").document(appUser.getUserID());
+
+                            documentReference.update("token", token);
+
+                            // Log and toast
+                            String msg = getString(R.string.msg_token_fmt, token);
+                            Log.d(TAG, msg);
+                        }
+                    });
+
+
+            NavController navController;
             BottomNavigationView navView = findViewById(R.id.nav_view);
             try {
 
@@ -86,27 +91,6 @@ public class NavMainActivity extends BaseCompat {
                     navController = Navigation.findNavController(this, R.id.nav_host_fragment);
                 }
 
-
-                DocumentReference documentReference = db.collection("patrols").document(appUser.getPatrol());
-
-                documentReference
-                        .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Patrol patrol;
-                        patrol = documentSnapshot.toObject(Patrol.class);
-                        if(patrol.getMeetingHour() == -1) return;
-                        if (!appUser.answeredToNextMeeting())
-                            scheduleNotification(patrol);
-                        //else
-                            //scheduleWeeklyClearOfResponses(patrol);
-
-                    }
-                });
-
-
-                assert navController != null;
                 NavigationUI.setupWithNavController(navView, navController);
 
             } catch (Exception e) {
@@ -120,7 +104,7 @@ public class NavMainActivity extends BaseCompat {
                     navView.getMenu().clear();
                     navController = Navigation.findNavController(this, R.id.nav_host_fragment_for_guests);
                     navView.inflateMenu(R.menu.bottom_nav_menu_for_guest);
-                    assert navController != null;
+                    //assert navController != null;
                     NavigationUI.setupWithNavController(navView, navController);
                 }
 
@@ -141,93 +125,10 @@ public class NavMainActivity extends BaseCompat {
 
     }
 
-    private void scheduleNotification(Patrol patrol) {
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(System.currentTimeMillis());
-
-        assert patrol != null;
-
-        int dayToAskForMeeting = patrol.getMeetingDay()+1;
-
-        if (dayToAskForMeeting == 8) {
-            dayToAskForMeeting = 1;
-
-            cal.set(Calendar.DAY_OF_WEEK, dayToAskForMeeting);
-        } else {
-            cal.set(Calendar.DAY_OF_WEEK, dayToAskForMeeting + 1);
-        }
-
-        cal.set(Calendar.HOUR_OF_DAY, patrol.getMeetingHour());
-        cal.set(Calendar.MINUTE, patrol.getMeetingMinute());
-        cal.set(Calendar.SECOND, 0);
-
-
-        Intent intent = new Intent(this, GoingToPatrolMeetingActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Intent yesResponseIntent = new Intent(this, MyBroadcastReceiver.class);
-        yesResponseIntent.setAction(ACTION_YES);
-        yesResponseIntent.putExtra("notID", 9);
-        PendingIntent yesPendingIntent = PendingIntent.getBroadcast(this, 9, yesResponseIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-        Intent noResponseIntent = new Intent(this, MyBroadcastReceiver.class);
-        noResponseIntent.setAction(ACTION_NO);
-        noResponseIntent.putExtra("notID", 10);
-        PendingIntent noPendingIntent = PendingIntent.getBroadcast(this, 10, noResponseIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, default_notification_channel_id);
-        builder.setContentTitle("Őrsi jelenlét");
-        builder.setContentText("Mész a következő őrsire?");
-        builder.setSmallIcon(R.drawable.check_attendance);
-        builder.setAutoCancel(true);
-        builder.setContentIntent(pendIntent);
-        builder.setChannelId(CHANNEL_ID);
-        builder.addAction(R.drawable.leadericon, getString(R.string.yes), yesPendingIntent);
-        builder.addAction(R.drawable.leadericon, getString(R.string.no), noPendingIntent);
-
-        Notification notification = builder.build();
-
-        Intent notificationIntent = new Intent(this, MyNotificationPublisher.class);
-        notificationIntent.putExtra(MyNotificationPublisher.NOTIFICATION_ID, 1);
-        notificationIntent.putExtra(MyNotificationPublisher.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-
-    }
-
-    public void scheduleWeeklyClearOfResponses(Patrol patrol) {
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(System.currentTimeMillis());
-
-        assert patrol != null;
-
-        int dayToAskForMeeting = patrol.getMeetingDay();
-
-        if (dayToAskForMeeting == 7) {
-            dayToAskForMeeting = 1;
-            cal.set(Calendar.DAY_OF_WEEK, dayToAskForMeeting);
-        } else {
-            cal.set(Calendar.DAY_OF_WEEK, dayToAskForMeeting + 1);
-        }
-
-        cal.set(Calendar.HOUR_OF_DAY, patrol.getMeetingHour());
-        cal.set(Calendar.MINUTE, patrol.getMeetingMinute());
-        cal.set(Calendar.SECOND, 0);
-
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        intent.setAction("clearAnswer");
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 2, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY*7, pendingIntent);
-    }
-
     @Override
     public void onBackPressed() {
 
-        int count = getSupportFragmentManager().getBackStackEntryCount();
+        /*int count = getSupportFragmentManager().getBackStackEntryCount();
 
         if (count == 0) {
             new AlertDialog.Builder(this)
@@ -248,8 +149,12 @@ public class NavMainActivity extends BaseCompat {
                     }).create().show();
         } else {
             getSupportFragmentManager().popBackStack();
-        }
+        }*/
 
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
 
     }
 

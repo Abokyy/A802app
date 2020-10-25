@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -39,6 +40,8 @@ public class BaseCompat extends AppCompatActivity {
     public static DatabaseReference realtimeDB = FirebaseDatabase.getInstance().getReference();
 
     protected static FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+
+    protected FirebaseMessaging firebaseMessaging = FirebaseMessaging.getInstance();
 
     public static StorageReference storageReference = firebaseStorage.getReference();
 

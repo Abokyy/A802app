@@ -56,7 +56,9 @@ public class ProjectorWhereaboutsActivity extends BaseCompat {
             }
         });
 
-        realtimeDB.addChildEventListener(new ChildEventListener() {
+        projWhereInDB = realtimeDB.child("projectorWhereabouts");
+
+        projWhereInDB.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 

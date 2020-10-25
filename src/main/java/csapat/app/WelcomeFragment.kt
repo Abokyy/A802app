@@ -13,6 +13,7 @@ import csapat.app.badgesystem.BadgesActivity
 import csapat.app.badgesystem.ScoreboardActivity
 import csapat.app.badgesystem.TaskListActivity
 import csapat.app.teamstructure.TeamStructureFragment
+import csapat.app.tradingGame.dataClasses.activities.CreateOrJoinGameActivity
 import kotlinx.android.synthetic.main.activity_send_task.*
 import kotlinx.android.synthetic.main.fragment_welcome.*
 import kotlinx.android.synthetic.main.fragment_welcome.view.*
@@ -52,6 +53,16 @@ class WelcomeFragment : Fragment() {
 
         root.showScoreboardBtn.setOnClickListener {
             val intent = Intent(activity, ScoreboardActivity::class.java)
+            startActivity(intent)
+        }
+
+        root.tradingGameBtn.setOnClickListener {
+            val intent = Intent(activity, CreateOrJoinGameActivity::class.java)
+            startActivity(intent)
+        }
+
+        root.nextMeetingAttendanceBtn.setOnClickListener {
+            val intent = Intent(activity, GoingToPatrolMeetingActivity::class.java)
             startActivity(intent)
         }
 

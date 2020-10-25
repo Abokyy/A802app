@@ -84,11 +84,6 @@ public class NewDetailActivity extends BaseCompat {
                             }
 
 
-
-
-
-
-
                         } else {
                             //TODO
                         }
@@ -113,6 +108,7 @@ public class NewDetailActivity extends BaseCompat {
                         .listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                hideProgressDialog();
                                 return false;
                             }
 
@@ -130,6 +126,7 @@ public class NewDetailActivity extends BaseCompat {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors
+                hideProgressDialog();
             }
         });
 

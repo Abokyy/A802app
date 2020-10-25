@@ -52,15 +52,10 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
             String action = intent.getAction();
 
-            int not_id = intent.getIntExtra("notID", 0);
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
             if (action.equals(NavMainActivity.ACTION_YES)) {
-                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                assert notificationManager != null;
-                notificationManager.cancel(1);
-
 
                 DocumentReference documentReference = db.collection("patrols").document(appUser.getPatrol());
 
@@ -72,10 +67,6 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                 yesAnswer = true;
 
             } else if (action.equals(NavMainActivity.ACTION_NO)) {
-
-                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                assert notificationManager != null;
-                notificationManager.cancel(1);
 
                 DocumentReference userReference = db.collection("users").document(appUser.getUserID());
 
@@ -95,6 +86,10 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
             } else {
                 Toast.makeText(context, "Nem válasz elküldve.", Toast.LENGTH_LONG).show();
             }
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            assert notificationManager != null;
+            int notID = intent.getIntExtra("notID", 0);
+            notificationManager.cancel(notID);
             appUser.setAnsweredToNextMeeting(true);
             SaveSharedPreference.setPrefUserAnsweredToNextMeeting(context, appUser, true);
             pendingResult.finish();

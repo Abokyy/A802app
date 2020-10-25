@@ -14,6 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".tradingGame.dataClasses.activities.CharacterOverviewActivity"></activity>
+        <activity android:name=".tradingGame.dataClasses.activities.JoinGameActivity" />
+        <activity android:name=".tradingGame.dataClasses.activities.CreateNewGameActivity" />
+        <activity android:name=".tradingGame.dataClasses.activities.CreateOrJoinGameActivity" />
         <activity android:name=".badgesystem.ScoreboardActivity" />
         <activity android:name=".badgesystem.TaskSolutionDetails" />
         <activity android:name=".badgesystem.TaskListActivity" />
@@ -45,15 +49,20 @@
         <activity android:name=".teamstructure.patrolActivityStuff.PatrolDetailActivity" />
         <activity android:name=".teamstructure.UserProfileActivity" />
 
-
         <receiver android:name=".supportFiles.MyNotificationPublisher" />
         <receiver android:name=".supportFiles.MyBroadcastReceiver" />
-        <receiver android:name=".supportFiles.AlarmReceiver"/>
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-4133828845327420~5582012208"/>
-
+            android:value="ca-app-pub-4133828845327420~5582012208" />
     </application>
 
 </manifest>

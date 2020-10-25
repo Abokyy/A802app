@@ -1,6 +1,7 @@
 package csapat.app
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
@@ -18,13 +19,27 @@ class GoingToPatrolMeetingActivity : BaseCompat() {
 
         responderUser = SaveSharedPreference.getAppUser(applicationContext)
 
+        val userRef = db.collection("users").document(responderUser.userID)
+        userRef.get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        if (document.getBoolean("answeredNextMeetingRequest")!!) {
+                            responseTV.text = "Már válaszoltál a héten, ha szeretnéd megváltoztatni akkor kattints a megfelelő gombra"
+                        } else {
+                            responseTV.text = "Még nem válaszoltál"
+                        }
+                    } else {
+                        Log.d("Going to patrol meeting", "No such document")
+                    }
+                }
+
+
 
         yesResponseBtn.setOnClickListener {
             val docRef: DocumentReference = db.collection("patrols").document(responderUser.patrol)
             docRef.update("nextMeetingAttendance", FieldValue.arrayUnion(responderUser.fullName))
                     .addOnSuccessListener {
-                        db.collection("users")
-                                .document(responderUser.userID)
+                        userRef
                                 .update("answeredNextMeetingRequest", true)
                                 .addOnSuccessListener {
                                     Toast.makeText(this, "Igen válasz elküldve.", Toast.LENGTH_LONG).show()
@@ -35,8 +50,7 @@ class GoingToPatrolMeetingActivity : BaseCompat() {
         }
 
         noResponseBtn.setOnClickListener {
-            db.collection("users")
-                    .document(responderUser.userID)
+            userRef
                     .update("answeredNextMeetingRequest", true)
                     .addOnSuccessListener {
                         Toast.makeText(this, "Nem válasz elküldve.", Toast.LENGTH_LONG).show()
